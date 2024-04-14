@@ -1,0 +1,357 @@
+﻿@model WebApp.Models.ORDERDETAIL
+@{  ViewBag.Title = "出货单明细 | Create";}
+<!-- MAIN CONTENT -->
+<div id="content">
+    <!-- quick navigation bar -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa fa-table fa-fw "></i>
+                出货作业
+                <span>
+                    >
+                    出货单明细
+                </span>
+            </h1>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+        </div>
+    </div>
+     <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+    <!-- NEW WIDGET START -->
+    <article class="col-sm-12 col-md-12 col-lg-12">
+        <!-- Widget ID (each widget will need unique ID)-->
+        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false">
+            <!-- widget options:
+            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+            data-widget-colorbutton="false"
+            data-widget-editbutton="false"
+            data-widget-togglebutton="false"
+            data-widget-deletebutton="false"
+            data-widget-fullscreenbutton="false"
+            data-widget-custombutton="false"
+            data-widget-collapsed="true"
+            data-widget-sortable="false"
+            -->
+            <header>
+                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                <h2> 出货单明细 </h2>
+            </header>
+            <!-- widget div-->
+            <div>
+                <!-- widget edit box -->
+                <div class="jarviswidget-editbox">
+                    <!-- This area used as dropdown edit box -->
+                </div>
+                <!-- end widget edit box -->
+                <!-- widget content -->
+                <div class="widget-body">
+                    <div class="widget-body-toolbar">
+                        <div class="row">
+                            <div class="col-sm-8  ">
+                                <div class="btn-group">
+                                    <a href="javascript:saveitem()" class="btn btn-sm btn-primary"> <i class="fa fa-floppy-o"></i> @Html.L("Save") </a>
+                                </div>
+                                <div class="btn-group" style="display:none">
+                                    <a href="javascript:todo()" class="btn btn-sm btn-primary"> <i class="fa fa-print"></i> ToDo </a>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-align-right">
+                                <div class="btn-group">
+                                    <a href="/ORDERDETAILs/Index" class="btn btn-sm btn-success"> <i class="fa fa-chevron-left"></i> @Html.L("GoBack") </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="body-content">
+                         @Html.Partial("EditForm")
+                    </div>		 
+                 </div>
+                 <!-- end widget content -->
+                 </div>
+            <!-- end widget div -->
+        </div>
+        <!-- end widget -->
+    </article>
+    <!-- WIDGET END -->
+</div>
+ 
+</section>
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+<script type="text/javascript">
+	    var orderdetailid=@Model.ID;
+        var $editform = $('#orderdetail_form');
+        //保存
+        function saveitem() {
+			  if ($editform.valid()) {
+                 var orderdetail = $editform.serializeJSON();
+                 var token = $('input[name="__RequestVerificationToken"]', $editform).val();
+                 $.ajax({
+                    type: "POST",
+                    url: "/ORDERDETAILs/CreateAsync",
+                    data: {
+                        __RequestVerificationToken: token,
+                        orderdetail:orderdetail
+                    },
+                    dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                })
+                .done(response => {
+                    if (response.success) {
+                        toastr.success('保存成功'); 
+                        window.location.href = "/ORDERDETAILs/Index";
+                    } else {
+                        $.messager.alert("错误", response.err, "error");
+                    }
+                    })
+                .fail((jqXHR, textStatus, errorThrown) => {
+                        $.messager.alert("异常",  errorThrowne ,"error");
+                    });
+                  
+             }						
+        }
+        //ToDo
+        function todo() {
+        }
+      
+
+     /********************************
+     *
+     * pageSetUp() is needed whenever you load a page.
+     * It initializes and checks for all basic elements of the page
+     * and makes rendering easier.
+     *
+     */
+     //pageSetUp();
+     /********************************
+     *
+     * pagefunction() $editform 校验规则
+     *
+     */
+     var pagefunction = function () {
+            var errorClass = 'has-error';
+            var successClass = 'has-success';
+            var errorElement = 'em';
+            $editform.validate({
+                 errorElement: errorElement,
+      errorPlacement: function (error, element) {
+         // Add the `help-block` class to the error element
+         error.addClass("help-block no-margin");
+         if (element.prop("type") === "checkbox") {
+          error.insertAfter(element.parent("label"));
+         } else if (element.prop("type") === "date" || element.prop("type") === "datetime" ) {
+          error.insertAfter(element.parent(".input-group"));
+         } else {
+          error.insertAfter(element);
+         }
+       },
+       highlight: function (element, errorClass, validClass) {
+        $(element).parents("div").addClass("has-error").removeClass("has-success");
+       },
+       unhighlight: function (element, errorClass, validClass) {
+        $(element).parents("div").addClass("has-success").removeClass("has-error");
+       },
+                // Rules for form validation
+                rules: {
+                    ORDERKEY:{
+                            required:true,
+                            rangelength: [0, 20],
+                    },
+                    WHSEID:{
+                            required:true,
+                            rangelength: [0, 20],
+                    },
+                    STORERKEY:{
+                            required:true,
+                            rangelength: [0, 50],
+                    },
+                    EXTERNORDERKEY:{
+                            required:false,
+                            rangelength: [0, 50],
+                    },
+                    ORDERLINENUMBER:{
+                            required:true,
+                            rangelength: [0, 6],
+                    },
+                    STATUS:{
+                            required:false,
+                            rangelength: [0, 3],
+                    },
+                    LOTTABLE2:{
+                            required:false,
+                            rangelength: [0, 50],
+                    },
+                    SUPPLIERCODE:{
+                            required:false,
+                            rangelength: [0, 20],
+                    },
+                    SUPPLIERNAME:{
+                            required:false,
+                            rangelength: [0, 80],
+                    },
+                    SKU:{
+                            required:true,
+                            rangelength: [0, 30],
+                    },
+                    SKUNAME:{
+                            required:false,
+                            rangelength: [0, 80],
+                    },
+                    ALTSKU:{
+                            required:false,
+                            rangelength: [0, 30],
+                    },
+                    ORIGINALQTY:{
+                            required:true,
+                            number: true,
+                    },
+                    UMO:{
+                            required:true,
+                            rangelength: [0, 10],
+                    },
+                    CASECNT:{
+                            required:true,
+                            number: true,
+                    },
+                    OPENQTY:{
+                            required:true,
+                            number: true,
+                    },
+                    SHIPPEDQTY:{
+                            required:true,
+                            number: true,
+                    },
+                    QTYPICKED:{
+                            required:true,
+                            number: true,
+                    },
+                    PALLET:{
+                            required:true,
+                            number: true,
+                    },
+                    PACKKEY:{
+                            required:false,
+                            rangelength: [0, 10],
+                    },
+                    GROSSWGT:{
+                            required:true,
+                            number: true,
+                    },
+                    NETWGT:{
+                            required:true,
+                            number: true,
+                    },
+                    CUBE:{
+                            required:true,
+                            number: true,
+                    },
+                    NOTES:{
+                            required:false,
+                            rangelength: [0, 100],
+                    },
+                    PQCQTYINSPECTED:{
+                            required:true,
+                            number: true,
+                    },
+                    PQCQTYREJECTED:{
+                            required:true,
+                            number: true,
+                    },
+                    PQCSTATUS:{
+                            required:false,
+                            rangelength: [0, 10],
+                    },
+                    PQCWHO:{
+                            required:false,
+                            rangelength: [0, 10],
+                    },
+                    PQCDATE:{
+                            required:false,
+                            date: true,
+                    },
+                    LOTTABLE3:{
+                            required:false,
+                            rangelength: [0, 50],
+                    },
+                    LOTTABLE1:{
+                            required:false,
+                            rangelength: [0, 50],
+                    },
+                    REQUESTEDSHIPDATE:{
+                            required:false,
+                            date: true,
+                    },
+                    DELIVERYDATE:{
+                            required:false,
+                            date: true,
+                    },
+                    EXTERNLINENO:{
+                            required:false,
+                            rangelength: [0, 20],
+                    },
+                    LOTTABLE4:{
+                            required:false,
+                            rangelength: [0, 50],
+                    },
+                    LOTTABLE5:{
+                            required:false,
+                            rangelength: [0, 50],
+                    },
+                    LOTTABLE6:{
+                            required:false,
+                            number: true,
+                    },
+                    LOTTABLE7:{
+                            required:false,
+                            number: true,
+                    },
+                    LOTTABLE8:{
+                            required:false,
+                            date: true,
+                    },
+                    ORDERID:{
+                            required:true,
+                            digits: true,
+                    },
+                },
+                // Messages for form validation
+                messages:{
+                
+                },
+                submitHandler:  (form) => {
+                      //调用保存方法
+                      saveitem();
+                      return false;
+                    //$(form).ajaxSubmit({
+                    //    success: function () {
+                    //        console.log('ajaxSubmit success');
+                    //   }
+                    //});
+                }
+            });
+        }
+        pagefunction();
+</script>
+
+ <!-- 初始化from -->
+ <script type="text/javascript">
+    
+    function initFormData(id) {
+            //$('#orderdetail_form').form('load', data);
+            
+    }
+
+
+   var orderdetailid=@Model.ID;
+    $(function(){
+        initFormData(orderdetailid);
+    });
+ </script>
+
+}

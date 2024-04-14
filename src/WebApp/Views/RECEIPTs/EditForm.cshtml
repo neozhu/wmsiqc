@@ -1,0 +1,318 @@
+﻿﻿@model WebApp.Models.RECEIPT
+<!-- begin master section -->
+<div  class="main-form">
+<!--begin receipt form  -->
+<form id="receipt_form" method="post" novalidate="novalidate" >
+@Html.AntiForgeryToken()
+   @Html.HiddenFor(x=>x.ID)
+ <fieldset>
+ <div class="form-group form-group-sm">
+      <div class="row">
+
+        <!--收货单号-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTKEY)</span> </label>
+			@Html.EditorFor(x => x.RECEIPTKEY, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.RECEIPTKEY) } })
+      
+         </div>
+
+        <!--仓库号-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.WHSEID)</span> </label>
+			@Html.EditorFor(x => x.WHSEID, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.WHSEID) } })
+      
+         </div>
+
+        <!--批次号-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.EXTERNRECEIPTKEY) </label>
+			@Html.EditorFor(x => x.EXTERNRECEIPTKEY, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.EXTERNRECEIPTKEY) } })
+      
+         </div>
+
+        <!--订单编号-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.POKEY) </label>
+			@Html.EditorFor(x => x.POKEY, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.POKEY) } })
+      
+         </div>
+
+        <!--公司名称-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUSR2) </label>
+			@Html.EditorFor(x => x.SUSR2, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUSR2) } })
+      
+         </div>
+
+        <!--工厂名称-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUSR3) </label>
+			@Html.EditorFor(x => x.SUSR3, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUSR3) } })
+      
+         </div>
+	   </div>
+    </div>
+ <div class="form-group form-group-sm">
+      <div class="row">
+
+        <!--货主-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.STORERKEY)</span> </label>
+			@Html.EditorFor(x => x.STORERKEY, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.STORERKEY) } })
+      
+         </div>
+
+        <!--收货单类型(收货/退货)-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.TYPE)</span> </label>
+			@Html.EditorFor(x => x.TYPE, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.TYPE) } })
+      
+         </div>
+
+        <!--状态-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.STATUS)</span> </label>
+			@Html.EditorFor(x => x.STATUS, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.STATUS) } })
+      
+         </div>
+
+       <!--收货单日期-->
+       <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTDATE)</span> </label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.RECEIPTDATE, 
+                         new { htmlAttributes = new { @class = "form-control datepicker hasDatepicker",
+                               placeholder = Html.DisplayNameFor(x => x.RECEIPTDATE ) } })
+               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			 </div>
+         </div>
+
+       <!--到货通知日期-->
+       <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.ADVICEDATE)</span> </label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.ADVICEDATE, 
+                         new { htmlAttributes = new { @class = "form-control datepicker hasDatepicker",
+                               placeholder = Html.DisplayNameFor(x => x.ADVICEDATE ) } })
+               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			 </div>
+         </div>
+
+       <!--预计收货日期-->
+       <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.EXPECTEDRECEIPTDATE) </label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.EXPECTEDRECEIPTDATE, 
+                         new { htmlAttributes = new { @class = "form-control datepicker hasDatepicker",
+                               placeholder = Html.DisplayNameFor(x => x.EXPECTEDRECEIPTDATE ) } })
+               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			 </div>
+         </div>
+	   </div>
+    </div>
+ <div class="form-group form-group-sm">
+      <div class="row">
+
+       <!--实际到货日期-->
+       <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.ARRIVALDATETIME) </label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.ARRIVALDATETIME, 
+                         new { htmlAttributes = new { @class = "form-control datepicker hasDatepicker",
+                               placeholder = Html.DisplayNameFor(x => x.ARRIVALDATETIME ) } })
+               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			 </div>
+         </div>
+
+       <!--结案日期-->
+       <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.CLOSEDDATE) </label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.CLOSEDDATE, 
+                         new { htmlAttributes = new { @class = "form-control datepicker hasDatepicker",
+                               placeholder = Html.DisplayNameFor(x => x.CLOSEDDATE ) } })
+               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			 </div>
+         </div>
+
+        <!--供应商代码-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUPPLIERCODE) </label>
+			@Html.EditorFor(x => x.SUPPLIERCODE, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUPPLIERCODE) } })
+      
+         </div>
+
+        <!--供应商名称-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUPPLIERNAME) </label>
+			@Html.EditorFor(x => x.SUPPLIERNAME, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUPPLIERNAME) } })
+      
+         </div>
+
+        <!--承运商代码-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.CARRIERKEY) </label>
+			@Html.EditorFor(x => x.CARRIERKEY, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.CARRIERKEY) } })
+      
+         </div>
+
+        <!--承运商名称-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.CARRIERNAME) </label>
+			@Html.EditorFor(x => x.CARRIERNAME, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.CARRIERNAME) } })
+      
+         </div>
+	   </div>
+    </div>
+ <div class="form-group form-group-sm">
+      <div class="row">
+
+		<!--合计数量-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.TOTALQTY)</span> </label>
+            @Html.EditorFor(x => x.TOTALQTY, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.TOTALQTY) } })
+
+        </div>
+
+		<!--合计未收数量-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.OPENQTY)</span> </label>
+            @Html.EditorFor(x => x.OPENQTY, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.OPENQTY) } })
+
+        </div>
+
+		<!--合计件数-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.TOTALPACKAGE) </label>
+            @Html.EditorFor(x => x.TOTALPACKAGE, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.TOTALPACKAGE) } })
+
+        </div>
+
+		<!--合计毛重(KG)-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.TOTALGROSSWEIGHT) </label>
+            @Html.EditorFor(x => x.TOTALGROSSWEIGHT, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.TOTALGROSSWEIGHT) } })
+
+        </div>
+
+		<!--合计体积(M)-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.TOTALVOLUME) </label>
+            @Html.EditorFor(x => x.TOTALVOLUME, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.TOTALVOLUME) } })
+
+        </div>
+
+        <!--备注-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.NOTES) </label>
+			@Html.EditorFor(x => x.NOTES, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.NOTES) } })
+      
+         </div>
+	   </div>
+    </div>
+ <div class="form-group form-group-sm">
+      <div class="row">
+
+        <!--上传用户-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUSR1) </label>
+			@Html.EditorFor(x => x.SUSR1, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUSR1) } })
+      
+         </div>
+
+        <!--SUSR4-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUSR4) </label>
+			@Html.EditorFor(x => x.SUSR4, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUSR4) } })
+      
+         </div>
+
+        <!--SUSR5-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUSR5) </label>
+			@Html.EditorFor(x => x.SUSR5, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUSR5) } })
+      
+         </div>
+
+		<!--SUSR6-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUSR6) </label>
+            @Html.EditorFor(x => x.SUSR6, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.SUSR6) } })
+
+        </div>
+
+		<!--SUSR7-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUSR7) </label>
+            @Html.EditorFor(x => x.SUSR7, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.SUSR7) } })
+
+        </div>
+
+       <!--SUSR8-->
+       <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUSR8) </label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.SUSR8, 
+                         new { htmlAttributes = new { @class = "form-control datepicker hasDatepicker",
+                               placeholder = Html.DisplayNameFor(x => x.SUSR8 ) } })
+               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			 </div>
+         </div>
+	   </div>
+    </div>
+	    
+</fieldset>
+</form>
+<!-- end receipt form  -->
+</div>
+
+<!-- end master section -->
+<!--========================================================================================-->
+<!-- begin detail section -->
+<div class="row">
+        <div class="col col-md-12 col-lg-12">
+        <!-- details tabs -->
+        <div class="tabs-container">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs bordered">
+								<li class="active"><a data-toggle="tab" href="#tab-receiptdetails"> RECEIPTDETAILS</a></li>
+				   
+		 </ul>
+		 <!-- Tab panes -->
+         <div class="tab-content">
+		 		  <div id="tab-receiptdetails" class="tab-pane active">
+                   <div class="panel-body-toolbar">
+                                    <div class="row">
+                                        <div class="col-sm-8  ">
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_append()" class="btn btn-sm btn-default"> <i class="fa fa-plus"></i> @Html.L("Add") </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_removeit()" class="btn btn-sm btn-default"> <i class="fa fa-trash-o"></i> @Html.L("Delete") </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_accept()" class="btn btn-sm btn-default"> <i class="fa fa-floppy-o"></i> @Html.L("Save") </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_reload()" class="btn btn-sm btn-default"> <i class="fa fa-refresh"></i> @Html.L("Refresh") </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_reject()" class="btn btn-sm btn-default"> <i class="fa fa-window-close-o"></i> @Html.L("Cancel") </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                   </div>
+                <div class="table-responsive">
+				<table id="receiptdetails_datagrid" >
+                </table>
+              
+            </div>
+        </div>
+		  	</div>
+	</div>
+ 
+<!--end details tabs -->
+        </div>
+    </div>
+<!-- end detail section -->
+

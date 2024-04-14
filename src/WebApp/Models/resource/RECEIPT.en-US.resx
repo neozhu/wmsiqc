@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+// <copyright file="RECEIPTMetadata.cs" company="neozhu/MVC5-Scaffolder">
+// Copyright (c) 2019 All Rights Reserved
+// </copyright>
+// <author>neo.zhu</author>
+// <date>2019/6/25 7:36:37 </date>
+// <summary>Class representing a Metadata entity </summary>
+  -->
+<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+　　<data name="ID" xml:space="preserve">
+    <value>I D</value>
+   </data> 
+　　<data name="RECEIPTKEY" xml:space="preserve">
+    <value>R E C E I P T K E Y</value>
+   </data> 
+　　<data name="WHSEID" xml:space="preserve">
+    <value>W H S E I D</value>
+   </data> 
+　　<data name="EXTERNRECEIPTKEY" xml:space="preserve">
+    <value>E X T E R N R E C E I P T K E Y</value>
+   </data> 
+　　<data name="POKEY" xml:space="preserve">
+    <value>P O K E Y</value>
+   </data> 
+　　<data name="SUSR2" xml:space="preserve">
+    <value>S U S R2</value>
+   </data> 
+　　<data name="SUSR3" xml:space="preserve">
+    <value>S U S R3</value>
+   </data> 
+　　<data name="STORERKEY" xml:space="preserve">
+    <value>S T O R E R K E Y</value>
+   </data> 
+　　<data name="TYPE" xml:space="preserve">
+    <value>T Y P E</value>
+   </data> 
+　　<data name="STATUS" xml:space="preserve">
+    <value>S T A T U S</value>
+   </data> 
+　　<data name="RECEIPTDATE" xml:space="preserve">
+    <value>R E C E I P T D A T E</value>
+   </data> 
+　　<data name="ADVICEDATE" xml:space="preserve">
+    <value>A D V I C E D A T E</value>
+   </data> 
+　　<data name="EXPECTEDRECEIPTDATE" xml:space="preserve">
+    <value>E X P E C T E D R E C E I P T D A T E</value>
+   </data> 
+　　<data name="ARRIVALDATETIME" xml:space="preserve">
+    <value>A R R I V A L D A T E T I M E</value>
+   </data> 
+　　<data name="CLOSEDDATE" xml:space="preserve">
+    <value>C L O S E D D A T E</value>
+   </data> 
+　　<data name="SUPPLIERCODE" xml:space="preserve">
+    <value>S U P P L I E R C O D E</value>
+   </data> 
+　　<data name="SUPPLIERNAME" xml:space="preserve">
+    <value>S U P P L I E R N A M E</value>
+   </data> 
+　　<data name="CARRIERKEY" xml:space="preserve">
+    <value>C A R R I E R K E Y</value>
+   </data> 
+　　<data name="CARRIERNAME" xml:space="preserve">
+    <value>C A R R I E R N A M E</value>
+   </data> 
+　　<data name="TOTALQTY" xml:space="preserve">
+    <value>T O T A L Q T Y</value>
+   </data> 
+　　<data name="OPENQTY" xml:space="preserve">
+    <value>O P E N Q T Y</value>
+   </data> 
+　　<data name="TOTALPACKAGE" xml:space="preserve">
+    <value>T O T A L P A C K A G E</value>
+   </data> 
+　　<data name="TOTALGROSSWEIGHT" xml:space="preserve">
+    <value>T O T A L G R O S S W E I G H T</value>
+   </data> 
+　　<data name="TOTALVOLUME" xml:space="preserve">
+    <value>T O T A L V O L U M E</value>
+   </data> 
+　　<data name="NOTES" xml:space="preserve">
+    <value>N O T E S</value>
+   </data> 
+　　<data name="SUSR1" xml:space="preserve">
+    <value>S U S R1</value>
+   </data> 
+　　<data name="SUSR4" xml:space="preserve">
+    <value>S U S R4</value>
+   </data> 
+　　<data name="SUSR5" xml:space="preserve">
+    <value>S U S R5</value>
+   </data> 
+　　<data name="SUSR6" xml:space="preserve">
+    <value>S U S R6</value>
+   </data> 
+　　<data name="SUSR7" xml:space="preserve">
+    <value>S U S R7</value>
+   </data> 
+　　<data name="SUSR8" xml:space="preserve">
+    <value>S U S R8</value>
+   </data> 
+</root>

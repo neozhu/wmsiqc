@@ -1,0 +1,972 @@
+﻿﻿@model WebApp.Models.RECEIPTDETAIL
+<!-- 弹出窗体form表单 -->
+ <div id="detailswindow" hidden="hidden" class="easyui-window" 
+      title="明细数据" 
+      data-options="modal:true,
+                    closed:true,
+                    maximized:false,
+                    iconCls:'icon-more',
+                    footer:'#windowfooter',
+                    closeDuration:200,
+                    closeAnimation:'slide',
+                    openDuration:300,
+                    openAnimation:'slide',
+                    onBeforeClose:function(){
+                      var that = $(this);
+                      if(hasmodified()){
+                        $.messager.confirm('确认','你确定要放弃保存修改的记录?',function(r){
+                        if (r){
+                          var opts = that.panel('options');
+                          var onBeforeClose = opts.onBeforeClose;
+                          opts.onBeforeClose = function(){};
+                          that.panel('close');
+                          opts.onBeforeClose = onBeforeClose;
+                        }
+                        });
+                        return false;
+                      }
+                    },
+                    onOpen:function(){
+                       $(this).window('vcenter');
+                       $(this).window('hcenter');
+                    },
+                    onRestore:function(){
+                    },
+                    onMaximize:function(){
+                    }
+                    " style="width:1350px;height:520px">
+    <!-- begin toolbar -->
+    <div class="window-body-toolbar">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="btn-group btn-group-sm">
+                       <button onclick="saveitem()" class="btn btn-default"> 
+                          <i class="fa fa-floppy-o"></i> 保存 
+                       </button>
+                </div>
+                <div class="btn-group btn-group-sm" style="display:none">
+                    <button onclick="todo()" class="btn btn-default">
+                        <i class="fa fa-print"></i> ToDo
+                    </button>
+                </div>
+            </div>
+            <div class="col-sm-4 text-align-right">
+              <div class="btn-group btn-group-sm">
+                <button type="button" class="btn   btn-success" onclick="closedetailwindow()">
+                    <i class="fa fa-chevron-left"></i>
+                    关闭
+                </button>
+              </div>
+            </div>
+        </div>
+    </div>
+    <!-- end toolbar -->
+    <!-- begin window body -->
+    <div class="padding-10">
+    <!-- begin form表单界面-->
+        <div class="row">
+            <div class="col-md-12">
+          <form id="receiptdetail_form" 
+              class="easyui-form form-horizontal padding-10" 
+              method="post" 
+              data-options="novalidate:true,
+                            onChange: function(target){
+                              hasChanged = true;
+                             },
+                             onLoadSuccess:function(data){
+                               hasChanged = false;
+                             }">
+  @Html.AntiForgeryToken()
+   <!--Primary Key-->
+  <input type="hidden" id="@Html.IdFor(model => model.ID)" 
+                       name="@Html.NameFor(model => model.ID)" 
+                       value="@Html.ValueFor(model => model.ID)" />
+    <!--入库条件-->
+  <input type="hidden" id="@Html.IdFor(model => model.CONDITIONCODE)" 
+                       name="@Html.NameFor(model => model.CONDITIONCODE)" 
+                       value="@Html.ValueFor(model => model.CONDITIONCODE)" />
+   <!--外部单行号-->
+  <input type="hidden" id="@Html.IdFor(model => model.EXTERNLINENO)" 
+                       name="@Html.NameFor(model => model.EXTERNLINENO)" 
+                       value="@Html.ValueFor(model => model.EXTERNLINENO)" />
+   <!--LOTTABLE4-->
+  <input type="hidden" id="@Html.IdFor(model => model.LOTTABLE4)" 
+                       name="@Html.NameFor(model => model.LOTTABLE4)" 
+                       value="@Html.ValueFor(model => model.LOTTABLE4)" />
+   <!--LOTTABLE5-->
+  <input type="hidden" id="@Html.IdFor(model => model.LOTTABLE5)" 
+                       name="@Html.NameFor(model => model.LOTTABLE5)" 
+                       value="@Html.ValueFor(model => model.LOTTABLE5)" />
+   <!--LOTTABLE6-->
+  <input type="hidden" id="@Html.IdFor(model => model.LOTTABLE6)" 
+                       name="@Html.NameFor(model => model.LOTTABLE6)" 
+                       value="@Html.ValueFor(model => model.LOTTABLE6)" />
+   <!--LOTTABLE7-->
+  <input type="hidden" id="@Html.IdFor(model => model.LOTTABLE7)" 
+                       name="@Html.NameFor(model => model.LOTTABLE7)" 
+                       value="@Html.ValueFor(model => model.LOTTABLE7)" />
+   <!--LOTTABLE7-->
+  <input type="hidden" id="@Html.IdFor(model => model.LOTTABLE8)" 
+                       name="@Html.NameFor(model => model.LOTTABLE8)" 
+                       value="@Html.ValueFor(model => model.LOTTABLE8)" />
+ 
+ <table class="table table-bordered"> 
+	    <tr>
+	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTKEY)</span></td>
+	   <td> 
+            <!--收货单号-->
+			<input id="@Html.IdFor(model => model.RECEIPTKEY)" 
+				   name="@Html.NameFor(model => model.RECEIPTKEY)" 
+				   value="@Html.ValueFor(model => model.RECEIPTKEY)"
+				   tabindex="0" required
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.RECEIPTKEY)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 validType: 'length[0,20]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.EXTERNRECEIPTKEY)</td>
+	   <td> 
+            <!--批次号-->
+			<input id="@Html.IdFor(model => model.EXTERNRECEIPTKEY)" 
+				   name="@Html.NameFor(model => model.EXTERNRECEIPTKEY)" 
+				   value="@Html.ValueFor(model => model.EXTERNRECEIPTKEY)"
+				   tabindex="1" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.EXTERNRECEIPTKEY)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,30]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.POKEY)</td>
+	   <td> 
+            <!--订单编号-->
+			<input id="@Html.IdFor(model => model.POKEY)" 
+				   name="@Html.NameFor(model => model.POKEY)" 
+				   value="@Html.ValueFor(model => model.POKEY)"
+				   tabindex="2" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.POKEY)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,30]'
+                                 " />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTDATE)</span></td>
+	   <td> 
+               <!--收货单日期-->
+                <input id="@Html.IdFor(model => model.RECEIPTDATE)" 
+			       name="@Html.NameFor(model => model.RECEIPTDATE)"
+                   value="@Html.ValueFor(model => model.RECEIPTDATE)"
+           		   tabindex="3"  required
+				   class="easyui-datebox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.RECEIPTDATE)',
+								 label:'',
+                                 width:200,
+								 required:true,
+								 formatter:dateformatter" />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.WHSEID)</span></td>
+	   <td> 
+            <!--仓库号-->
+			<input id="@Html.IdFor(model => model.WHSEID)" 
+				   name="@Html.NameFor(model => model.WHSEID)" 
+				   value="@Html.ValueFor(model => model.WHSEID)"
+				   tabindex="4" required
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.WHSEID)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 validType: 'length[0,20]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.LOTTABLE1)</td>
+	   <td> 
+            <!--工厂名称-->
+			<input id="@Html.IdFor(model => model.LOTTABLE1)" 
+				   name="@Html.NameFor(model => model.LOTTABLE1)" 
+				   value="@Html.ValueFor(model => model.LOTTABLE1)"
+				   tabindex="5" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.LOTTABLE1)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,50]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.LOTTABLE2)</td>
+	   <td> 
+            <!--公司名称-->
+			<input id="@Html.IdFor(model => model.LOTTABLE2)" 
+				   name="@Html.NameFor(model => model.LOTTABLE2)" 
+				   value="@Html.ValueFor(model => model.LOTTABLE2)"
+				   tabindex="6" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.LOTTABLE2)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,50]'
+                                 " />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.STORERKEY)</span></td>
+	   <td> 
+            <!--货主-->
+			<input id="@Html.IdFor(model => model.STORERKEY)" 
+				   name="@Html.NameFor(model => model.STORERKEY)" 
+				   value="@Html.ValueFor(model => model.STORERKEY)"
+				   tabindex="7" required
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.STORERKEY)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 validType: 'length[0,50]'
+                                 " />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTLINENUMBER)</span></td>
+	   <td> 
+            <!--行号-->
+			<input id="@Html.IdFor(model => model.RECEIPTLINENUMBER)" 
+				   name="@Html.NameFor(model => model.RECEIPTLINENUMBER)" 
+				   value="@Html.ValueFor(model => model.RECEIPTLINENUMBER)"
+				   tabindex="8" required
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.RECEIPTLINENUMBER)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 validType: 'length[0,6]'
+                                 " />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.SKU)</span></td>
+	   <td> 
+            <!--物料编号-->
+			<input id="@Html.IdFor(model => model.SKU)" 
+				   name="@Html.NameFor(model => model.SKU)" 
+				   value="@Html.ValueFor(model => model.SKU)"
+				   tabindex="9" required
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.SKU)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 validType: 'length[0,30]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.SKUNAME)</td>
+	   <td> 
+            <!--物料名称-->
+			<input id="@Html.IdFor(model => model.SKUNAME)" 
+				   name="@Html.NameFor(model => model.SKUNAME)" 
+				   value="@Html.ValueFor(model => model.SKUNAME)"
+				   tabindex="10" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.SKUNAME)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,80]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.ALTSKU)</td>
+	   <td> 
+            <!--供应商物料编号-->
+			<input id="@Html.IdFor(model => model.ALTSKU)" 
+				   name="@Html.NameFor(model => model.ALTSKU)" 
+				   value="@Html.ValueFor(model => model.ALTSKU)"
+				   tabindex="11" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.ALTSKU)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,30]'
+                                 " />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label">@Html.DisplayNameFor(model => model.STATUS)</td>
+	   <td> 
+            <!--状态-->
+			<input id="@Html.IdFor(model => model.STATUS)" 
+				   name="@Html.NameFor(model => model.STATUS)" 
+				   value="@Html.ValueFor(model => model.STATUS)"
+				   tabindex="12" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.STATUS)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,3]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.SUPPLIERCODE)</td>
+	   <td> 
+            <!--供应商代码-->
+			<input id="@Html.IdFor(model => model.SUPPLIERCODE)" 
+				   name="@Html.NameFor(model => model.SUPPLIERCODE)" 
+				   value="@Html.ValueFor(model => model.SUPPLIERCODE)"
+				   tabindex="13" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.SUPPLIERCODE)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,20]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.SUPPLIERNAME)</td>
+	   <td> 
+            <!--供应商名称-->
+			<input id="@Html.IdFor(model => model.SUPPLIERNAME)" 
+				   name="@Html.NameFor(model => model.SUPPLIERNAME)" 
+				   value="@Html.ValueFor(model => model.SUPPLIERNAME)"
+				   tabindex="14" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.SUPPLIERNAME)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,80]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.DATERECEIVED)</td>
+	   <td> 
+               <!--收货日期-->
+                <input id="@Html.IdFor(model => model.DATERECEIVED)" 
+			       name="@Html.NameFor(model => model.DATERECEIVED)"
+                   value="@Html.ValueFor(model => model.DATERECEIVED)"
+           		   tabindex="15"  
+				   class="easyui-datebox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.DATERECEIVED)',
+								 label:'',
+                                 width:200,
+								 required:false,
+								 formatter:dateformatter" />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.QTYEXPECTED)</span></td>
+	   <td> 
+             <!--预收量-->
+             <input id="@Html.IdFor(model => model.QTYEXPECTED)"
+				   name="@Html.NameFor(model => model.QTYEXPECTED)" 
+				   value="@Html.ValueFor(model => model.QTYEXPECTED)"
+				   tabindex="16" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.QTYEXPECTED)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.CASECNT)</span></td>
+	   <td> 
+             <!--件数-->
+             <input id="@Html.IdFor(model => model.CASECNT)"
+				   name="@Html.NameFor(model => model.CASECNT)" 
+				   value="@Html.ValueFor(model => model.CASECNT)"
+				   tabindex="17" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.CASECNT)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.PALLET)</span></td>
+	   <td> 
+             <!--栈板数-->
+             <input id="@Html.IdFor(model => model.PALLET)"
+				   name="@Html.NameFor(model => model.PALLET)" 
+				   value="@Html.ValueFor(model => model.PALLET)"
+				   tabindex="18" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.PALLET)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.QTYADJUSTED)</span></td>
+	   <td> 
+             <!--调整量-->
+             <input id="@Html.IdFor(model => model.QTYADJUSTED)"
+				   name="@Html.NameFor(model => model.QTYADJUSTED)" 
+				   value="@Html.ValueFor(model => model.QTYADJUSTED)"
+				   tabindex="19" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.QTYADJUSTED)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.QTYREJECTED)</span></td>
+	   <td> 
+             <!--拒收量-->
+             <input id="@Html.IdFor(model => model.QTYREJECTED)"
+				   name="@Html.NameFor(model => model.QTYREJECTED)" 
+				   value="@Html.ValueFor(model => model.QTYREJECTED)"
+				   tabindex="20" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.QTYREJECTED)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.QTYRECEIVED)</span></td>
+	   <td> 
+             <!--已收量-->
+             <input id="@Html.IdFor(model => model.QTYRECEIVED)"
+				   name="@Html.NameFor(model => model.QTYRECEIVED)" 
+				   value="@Html.ValueFor(model => model.QTYRECEIVED)"
+				   tabindex="21" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.QTYRECEIVED)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.UMO)</span></td>
+	   <td> 
+            <!--单位-->
+			<input id="@Html.IdFor(model => model.UMO)" 
+				   name="@Html.NameFor(model => model.UMO)" 
+				   value="@Html.ValueFor(model => model.UMO)"
+				   tabindex="22" required
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.UMO)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 validType: 'length[0,10]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.PACKKEY)</td>
+	   <td> 
+            <!--包装-->
+			<input id="@Html.IdFor(model => model.PACKKEY)" 
+				   name="@Html.NameFor(model => model.PACKKEY)" 
+				   value="@Html.ValueFor(model => model.PACKKEY)"
+				   tabindex="23" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.PACKKEY)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,10]'
+                                 " />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.GROSSWGT)</span></td>
+	   <td> 
+             <!--毛重(KG)-->
+             <input id="@Html.IdFor(model => model.GROSSWGT)"
+				   name="@Html.NameFor(model => model.GROSSWGT)" 
+				   value="@Html.ValueFor(model => model.GROSSWGT)"
+				   tabindex="24" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.GROSSWGT)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.NETWGT)</span></td>
+	   <td> 
+             <!--净重(KG)-->
+             <input id="@Html.IdFor(model => model.NETWGT)"
+				   name="@Html.NameFor(model => model.NETWGT)" 
+				   value="@Html.ValueFor(model => model.NETWGT)"
+				   tabindex="25" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.NETWGT)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.CUBE)</span></td>
+	   <td> 
+             <!--体积(M)-->
+             <input id="@Html.IdFor(model => model.CUBE)"
+				   name="@Html.NameFor(model => model.CUBE)" 
+				   value="@Html.ValueFor(model => model.CUBE)"
+				   tabindex="26" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.CUBE)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.NOTES)</td>
+	   <td> 
+            <!--备注-->
+			<input id="@Html.IdFor(model => model.NOTES)" 
+				   name="@Html.NameFor(model => model.NOTES)" 
+				   value="@Html.ValueFor(model => model.NOTES)"
+				   tabindex="27" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.NOTES)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,100]'
+                                 " />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label">@Html.DisplayNameFor(model => model.LOTTABLE3)</td>
+	   <td> 
+            <!--外箱标签-->
+			<input id="@Html.IdFor(model => model.LOTTABLE3)" 
+				   name="@Html.NameFor(model => model.LOTTABLE3)" 
+				   value="@Html.ValueFor(model => model.LOTTABLE3)"
+				   tabindex="28" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.LOTTABLE3)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,50]'
+                                 " />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.PQCQTYINSPECTED)</span></td>
+	   <td> 
+             <!--QC数量-->
+             <input id="@Html.IdFor(model => model.PQCQTYINSPECTED)"
+				   name="@Html.NameFor(model => model.PQCQTYINSPECTED)" 
+				   value="@Html.ValueFor(model => model.PQCQTYINSPECTED)"
+				   tabindex="29" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.PQCQTYINSPECTED)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.PQCQTYREJECTED)</span></td>
+	   <td> 
+             <!--QC不良数-->
+             <input id="@Html.IdFor(model => model.PQCQTYREJECTED)"
+				   name="@Html.NameFor(model => model.PQCQTYREJECTED)" 
+				   value="@Html.ValueFor(model => model.PQCQTYREJECTED)"
+				   tabindex="30" 
+				   class="easyui-numberbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.PQCQTYREJECTED)',
+								 label:'',
+                                 width:200,
+								 required:true,
+                                 precision:2,
+                                 validType:'decimal',
+                                 
+                                 "  />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.PQCSTATUS)</td>
+	   <td> 
+            <!--QC状态-->
+			<input id="@Html.IdFor(model => model.PQCSTATUS)" 
+				   name="@Html.NameFor(model => model.PQCSTATUS)" 
+				   value="@Html.ValueFor(model => model.PQCSTATUS)"
+				   tabindex="31" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.PQCSTATUS)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,10]'
+                                 " />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label">@Html.DisplayNameFor(model => model.PQCWHO)</td>
+	   <td> 
+            <!--QC人员-->
+			<input id="@Html.IdFor(model => model.PQCWHO)" 
+				   name="@Html.NameFor(model => model.PQCWHO)" 
+				   value="@Html.ValueFor(model => model.PQCWHO)"
+				   tabindex="32" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.PQCWHO)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,10]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.PQCDATE)</td>
+	   <td> 
+               <!--QC日期-->
+                <input id="@Html.IdFor(model => model.PQCDATE)" 
+			       name="@Html.NameFor(model => model.PQCDATE)"
+                   value="@Html.ValueFor(model => model.PQCDATE)"
+           		   tabindex="33"  
+				   class="easyui-datebox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.PQCDATE)',
+								 label:'',
+                                 width:200,
+								 required:false,
+								 formatter:dateformatter" />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.TOLOC)</td>
+	   <td> 
+            <!--目标库位(良品区/不良品区)-->
+			<input id="@Html.IdFor(model => model.TOLOC)" 
+				   name="@Html.NameFor(model => model.TOLOC)" 
+				   value="@Html.ValueFor(model => model.TOLOC)"
+				   tabindex="34" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.TOLOC)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,20]'
+                                 " />
+				   </td>
+	   	   <td class="control-label">@Html.DisplayNameFor(model => model.TOLOT)</td>
+	   <td> 
+            <!--目标批号-->
+			<input id="@Html.IdFor(model => model.TOLOT)" 
+				   name="@Html.NameFor(model => model.TOLOT)" 
+				   value="@Html.ValueFor(model => model.TOLOT)"
+				   tabindex="35" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.TOLOT)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,20]'
+                                 " />
+				   </td>
+	   	   </tr>
+	   	    <tr>
+	   <td class="control-label">@Html.DisplayNameFor(model => model.TOLPN)</td>
+	   <td> 
+            <!--目标LPN-->
+			<input id="@Html.IdFor(model => model.TOLPN)" 
+				   name="@Html.NameFor(model => model.TOLPN)" 
+				   value="@Html.ValueFor(model => model.TOLPN)"
+				   tabindex="36" 
+				   class="easyui-textbox" 
+				   type="text" 
+				   data-options="prompt:'@Html.DisplayNameFor(model => model.TOLPN)',
+								 label:'',
+                                 width:200,
+								 required:false,
+                                 validType: 'length[0,20]'
+                                 " />
+				   </td>
+	   	   <td class="control-label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTID)</span></td>
+	   <td> 
+            <!--收货单ID-->
+			<input id="@Html.IdFor(model => model.RECEIPTID)"
+			       name="@Html.NameFor(model => model.RECEIPTID)"
+				   value="@Html.ValueFor(model => model.RECEIPTID)"
+                   tabindex="37" required
+              	   class="easyui-combobox"       
+                   data-options="prompt:'@Html.DisplayNameFor(model => model.RECEIPTID)' ,
+						label:'' ,
+                        width:200,
+						required:true ,
+						valueField: 'ID',
+						textField:  'RECEIPTKEY' ,
+						url: '/RECEIPTDETAILs/GetRECEIPTSAsync' ,
+						onSelect: function(item){
+						//console.log(item);
+				}">
+	   </td>
+	   	    		<td></td> <td></td>
+			<td></td> <td></td>
+		     </tr>
+	       </table>
+     </form>
+     </div>
+    </div>
+<!--end form表单界面-->
+<!--========================================================================================-->
+     </div>
+    <!--end window body -->
+</div>
+<div id="windowfooter" style="padding:5px;">&nbsp;</div>
+<!-- 弹出窗体form表单 -->
+<!-- 弹出编辑对话框 -->
+<!--begin popup detailview javascript block -->
+<script type="text/javascript">
+    //判断新增编辑状态
+    var MODELSTATE = 'Added';
+    var receiptdetailid = null;
+    var hasChanged = false;
+    function opendetailwindow(data,state) {
+         initdetailview();
+         MODELSTATE = state;
+         receiptdetailid = (data.ID || 0);
+         $("#detailswindow").window("open");
+         $('#receiptdetail_form').form('reset');
+         $('#receiptdetail_form').form('load', data);
+             }
+    
+    //async 保存数据
+    async function saveitem() { 
+      var $editform = $('#receiptdetail_form');
+      if ($editform.form('enableValidation').form('validate')) {
+            let receiptdetail = $editform.serializeJSON();
+                        let url = '/RECEIPTDETAILs/EditAsync';
+            //判断是新增或是修改方法
+            if (MODELSTATE === 'Added') {
+                url = '/RECEIPTDETAILs/CreateAsync';
+            }
+            var token = $('input[name="__RequestVerificationToken"]', $editform).val();
+            $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        __RequestVerificationToken: token,
+                        receiptdetail:receiptdetail
+                    },
+                    dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded; charset=utf-8'
+                })
+                .done(response => {
+                    if (response.success) {
+                        hasChanged = false;
+                        $editform.form('disableValidation');
+                        $dg.datagrid('reload');
+                        $('#detailswindow').window("close");
+                        toastr.success("保存成功");  
+                    } else {
+                        $.messager.alert("错误",   response.err, "error");
+                    }
+                    })
+                .fail((jqXHR, textStatus, errorThrown) => {
+                       $.messager.alert('异常', `${jqXHR.status}: ${jqXHR.statusText} `, 'error');
+                    });
+        }
+    }
+    //关闭窗口
+    function closedetailwindow() {
+        $('#detailswindow').window('close');
+    }
+    //todo
+    function todo() {
+         console.log('todo.....');
+    }
+     //判断是否有没有保存的记录
+     function hasmodified() {
+            return hasChanged;
+
+     }
+
+
+function initdetailview() {
+
+ 
+//回车光标移动到下个输入控件
+    //如果是枚举类型需要把numberbox改成combobox
+    //预收量
+	$('#QTYEXPECTED').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //件数
+	$('#CASECNT').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //栈板数
+	$('#PALLET').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //调整量
+	$('#QTYADJUSTED').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //拒收量
+	$('#QTYREJECTED').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //已收量
+	$('#QTYRECEIVED').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //毛重(KG)
+	$('#GROSSWGT').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //净重(KG)
+	$('#NETWGT').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //体积(M)
+	$('#CUBE').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //QC数量
+	$('#PQCQTYINSPECTED').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //QC不良数
+	$('#PQCQTYREJECTED').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //LOTTABLE6
+	//$('#LOTTABLE6').numberbox('textbox').bind('keydown', function (e) {
+    //  if (e.keyCode == 13) {
+    //    $(e.target).emulateTab();
+    //  }
+    //});
+    //如果是枚举类型需要把numberbox改成combobox
+    //LOTTABLE7
+	//$('#LOTTABLE7').numberbox('textbox').bind('keydown', function (e) {
+    //  if (e.keyCode == 13) {
+    //    $(e.target).emulateTab();
+    //  }
+    //});
+    //日期类型 收货单日期
+	$('#RECEIPTDATE').datebox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //日期类型 收货日期
+	$('#DATERECEIVED').datebox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //日期类型 QC日期
+	$('#PQCDATE').datebox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //日期类型 LOTTABLE7
+	//$('#LOTTABLE8').datebox('textbox').bind('keydown', function (e) {
+    //  if (e.keyCode == 13) {
+    //    $(e.target).emulateTab();
+    //  }
+    //});
+    //收货单ID默认外键使用combobox,也可以使用combogrid
+	$('#RECEIPTID').combobox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+}
+</script>
+

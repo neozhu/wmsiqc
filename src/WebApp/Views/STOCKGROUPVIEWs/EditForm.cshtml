@@ -1,0 +1,63 @@
+﻿﻿@model WebApp.Models.STOCKGROUPVIEW
+<!-- begin master section -->
+<div  class="main-form">
+<!--begin stockgroupview form  -->
+<form id="stockgroupview_form" method="post" novalidate="novalidate" >
+@Html.AntiForgeryToken()
+   @Html.HiddenFor(x=>x.RID)
+ <fieldset>
+ <div class="form-group form-group-sm">
+      <div class="row">
+
+        <!--供应商代码-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUPPLIERCODE) </label>
+			@Html.EditorFor(x => x.SUPPLIERCODE, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUPPLIERCODE) } })
+      
+         </div>
+
+        <!--供应商名称-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SUPPLIERNAME) </label>
+			@Html.EditorFor(x => x.SUPPLIERNAME, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SUPPLIERNAME) } })
+      
+         </div>
+
+        <!--物料编号-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.SKU)</span> </label>
+			@Html.EditorFor(x => x.SKU, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SKU) } })
+      
+         </div>
+
+        <!--物料名称-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label">@Html.DisplayNameFor(model => model.SKUNAME) </label>
+			@Html.EditorFor(x => x.SKUNAME, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SKUNAME) } })
+      
+         </div>
+
+		<!--数量-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.TOTAL)</span> </label>
+            @Html.EditorFor(x => x.TOTAL, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.TOTAL) } })
+
+        </div>
+
+        <!--状态-->
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label class="control-label"><span class="required">@Html.DisplayNameFor(model => model.STATUS)</span> </label>
+			@Html.EditorFor(x => x.STATUS, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.STATUS) } })
+      
+         </div>
+	   </div>
+    </div>
+	    
+</fieldset>
+</form>
+<!-- end stockgroupview form  -->
+</div>
+
+<!-- end master section -->
+<!--========================================================================================-->
+

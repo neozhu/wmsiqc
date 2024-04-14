@@ -1,0 +1,933 @@
+﻿
+@{
+  ViewBag.Title = "扫描入库";
+}
+<style>
+  .bs-example {
+    margin-right: 3px;
+    margin-left: 3px;
+    background-color: #fff;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+</style>
+<!-- MAIN CONTENT -->
+<div id="content">
+  <!-- quick navigation bar -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+      <h1 class="page-title txt-color-blueDark">
+        <i class="fa fa-table fa-fw "></i>
+        收货作业
+        <span>
+          >
+          扫描入库
+        </span>
+      </h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+
+    </div>
+  </div>
+  <!-- end quick navigation bar -->
+  <!-- widget grid -->
+  <section id="widget-grid" class="">
+    <!-- row -->
+    <div class="row">
+      <!-- NEW WIDGET START -->
+      <article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
+          <!-- widget options:
+          usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+          data-widget-colorbutton="false"
+          data-widget-editbutton="false"
+          data-widget-togglebutton="false"
+          data-widget-deletebutton="false"
+          data-widget-fullscreenbutton="false"
+          data-widget-custombutton="false"
+          data-widget-collapsed="true"
+          data-widget-sortable="false"
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>扫描比对</h2>
+          </header>
+
+          <!-- widget div-->
+          <div>
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+              <!-- This area used as dropdown edit box -->
+            </div>
+            <!-- end widget edit box -->
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+              <div class="sk-spinner sk-spinner-wave">
+                <div class="sk-rect1"></div>
+                <div class="sk-rect2"></div>
+                <div class="sk-rect3"></div>
+                <div class="sk-rect4"></div>
+                <div class="sk-rect5"></div>
+              </div>
+              <div class="widget-body-toolbar">
+                <div class="row">
+
+                  <div class="form-inline" style="
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom:5px;
+">
+                    <div class="form-group">
+                      <label for="dt">收货单日期</label>
+                      <input id="dt"
+                             name="dt"
+                             value=""
+                             tabindex="1"
+                             class="easyui-combobox"
+                             type="text"
+                             style="width:200px"
+                             data-options="prompt:'收货单日期',
+                                  width:200,
+     						                  valueField: 'value',
+                                  textField: 'value',
+                                  url: '/RECEIPTs/GetReciptDateList',
+                                  method:'get',
+                                  onSelect: function(rec){
+                             $('#lot').combogrid('setValue','');
+                                      var url = '/RECEIPTs/GetReciptGrid?dt='+rec.value;
+                                     $('#lot').combogrid('grid').datagrid('reload', url);
+                                  }" />
+                    </div>
+                    <div class="form-group">
+                      <label for="lot">批号</label>
+                      <input id="lot"
+                             name="lot"
+                             value=""
+                             tabindex="2"
+                             class="easyui-combogrid"
+                             type="text"
+                             style="width:200px"
+                             data-options="prompt:'批号',
+     						                  panelWidth:650,
+                             width:200,
+            value:'',
+            idField:'EXTERNRECEIPTKEY',
+            textField:'EXTERNRECEIPTKEY',
+            url:'',
+            method:'get',
+            columns:[[
+                {field:'EXTERNRECEIPTKEY',title:'批次号',width:120},
+                {field:'SUPPLIERNAME',title:'供应商',width:140},
+                {field:'TYPE',title:'类型',width:60,formatter:asntypeformatter},
+                {field:'POKEY',title:'订单号',width:120},
+                {field:'SUSR4',title:'发货单号',width:100},
+                {field:'OPENQTY',title:'合计未收数量',width:80},
+                {field:'TOTALPACKAGE',title:'合计件数',width:80}
+            ]]" />
+                    </div>
+                    <div class="btn-group btn-group-sm">
+                      <button onclick="search()" class="btn btn-default btn-sm"> <i class="fa fa-search"></i> 查询 </button>
+                      <div onclick="todoinput()" class="btn btn-default btn-sm btn-success"> <i class="fa fa-cart-arrow-down"></i> 批量入库 </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="bs-example">
+                    <form id="inputform" class="form-inline" style="
+    margin-left: 10px;
+    margin-right: 10px;
+">
+                      <fieldset>
+                        <legend>扫描操作区</legend>
+                      </fieldset>
+                      <div class="form-group">
+                        <label for="barcode">扫描条码</label>
+                        <input id="barcode"
+                               name="barcode"
+                               value=""
+                               tabindex="20"
+                               class="easyui-textbox"
+                               style="width:250px"
+                               type="text"
+                               data-options="prompt:'外箱标签',
+                               width:250,
+								                 required:true,
+                                 validType:'length[10,50]',
+                               onChange:inputbarcode
+                                 " />
+                      </div>
+                      <div class="form-group">
+                        <label for="qtyexpected">预收量</label>
+                        <input id="qtyexpected"
+                               name="qtyexpected"
+                               value=""
+                               tabindex="20"
+                               class="easyui-numberbox"
+                               style="width:80px"
+                               type="text"
+                               data-options="prompt:'预收量',
+								                 required:true,
+                                 width:100,
+                                 validType:'decimal'
+                                 " />
+                      </div>
+                      <div class="form-group">
+                        <label for="confirmqty">确认量</label>
+                        <input id="confirmqty"
+                               name="confirmqty"
+                               value=""
+                               tabindex="20"
+                               class="easyui-numberbox"
+                               style="width:80px"
+                               type="text"
+                               data-options="prompt:'确认量',
+								                 required:true,
+                                 width:100,
+                                 validType:'decimal'
+                                 " />
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="autocheck" checked="checked"> 自动提交(预收量)
+                        </label>
+                      </div>
+                      <div class="btn-group btn-group-sm">
+                        <div onclick="scaninput()" class="btn btn-default btn-sm btn-success"> <i class="fa fa-check"></i> 确认 </div>
+                      </div>
+                    </form>
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="alert alert-warning no-margin">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-info"></i>
+                注意事项:标签格式[订单编号]_[日期]_[物料编码]_[序号] 例如:P201906250364_96P_110837173A_03
+              </div>
+              <!--begin datagrid-content -->
+              <div class="table-responsive">
+                <table id="datagrid1"></table>
+              </div>
+              <!--end datagrid-content -->
+            </div>
+            <!-- end widget content -->
+          </div>
+          <!-- end widget div -->
+        </div>
+
+      </article>
+      <article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false">
+          <!-- widget options:
+          usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+          data-widget-colorbutton="false"
+          data-widget-editbutton="false"
+          data-widget-togglebutton="false"
+          data-widget-deletebutton="false"
+          data-widget-fullscreenbutton="false"
+          data-widget-custombutton="false"
+          data-widget-collapsed="true"
+          data-widget-sortable="false"
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>IQC检验</h2>
+          </header>
+
+          <!-- widget div-->
+          <div>
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+              <!-- This area used as dropdown edit box -->
+            </div>
+            <!-- end widget edit box -->
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+              <div class="sk-spinner sk-spinner-wave">
+                <div class="sk-rect1"></div>
+                <div class="sk-rect2"></div>
+                <div class="sk-rect3"></div>
+                <div class="sk-rect4"></div>
+                <div class="sk-rect5"></div>
+              </div>
+              <div class="widget-body-toolbar">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="btn-group btn-group-sm">
+                      <button onclick="reload()" class="btn btn-default"> <i class="fa fa-refresh"></i> 刷新 </button>
+                      <button onclick="change105()" class="btn btn-default"> <i class="fa fa-check-square-o"></i> 抽检合格 </button>
+                      <button onclick="change104()" class="btn btn-default"> <i class="fa fa-recycle"></i> 抽检不良 </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="alert alert-warning no-margin fade in">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-info"></i>
+                注意事项:筛选扫描比对
+              </div>
+              <!--begin datagrid-content -->
+              <div class="table-responsive">
+                <table id="datagrid2"></table>
+              </div>
+              <!--end datagrid-content -->
+            </div>
+            <!-- end widget content -->
+          </div>
+          <!-- end widget div -->
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+    var $dg1 = $('#datagrid1');
+  var $dg2 = $('#datagrid2');
+    //查询
+    function search() {
+      const lot = $('#lot').combogrid('getValue');
+      const dt = $('#dt').combobox('getValue');
+      if (lot == '' || dt == '') {
+        $.messager.alert('提示', '请选择日期和批号', 'info');
+      } else {
+        $('#wid-id-0 div').children('.widget-body').addClass('sk-loading');
+        const url1 = `/RECEIPTDETAILs/GetData100ByLot?lot=${lot}&dt=${dt}`;
+        $.get(url1).done(res => {
+          console.log(res);
+          $('#wid-id-0 div').children('.widget-body').removeClass('sk-loading');
+          $dg1.datagrid('loadData', res);
+        });
+
+        $('#wid-id-1 div').children('.widget-body').addClass('sk-loading');
+        const url2 = `/RECEIPTDETAILs/GetData1003ByLot?lot=${lot}&dt=${dt}`;
+        $.get(url2).done(res => {
+          console.log(res);
+          $('#wid-id-1 div').children('.widget-body').removeClass('sk-loading');
+          $dg2.datagrid('loadData', res);
+        });
+      }
+  }
+  function reload() {
+    const lot = $('#lot').combogrid('getValue');
+    const dt = $('#dt').combobox('getValue');
+    if (lot == '' || dt == '') {
+      $.messager.alert('提示', '请选择日期和批号', 'info');
+    } else {
+      $dg1.datagrid('loading');
+      const url1 = `/RECEIPTDETAILs/GetData100ByLot?lot=${lot}&dt=${dt}`;
+      $.get(url1).done(res => {
+        $dg1.datagrid('loadData', res);
+        $dg1.datagrid('loaded');
+      });
+
+      $dg2.datagrid('loading');
+      const url2 = `/RECEIPTDETAILs/GetData1003ByLot?lot=${lot}&dt=${dt}`;
+      $.get(url2).done(res => {
+        $dg2.datagrid('loadData', res);
+        $dg2.datagrid('loaded');
+      });
+    }
+  }
+  //手工入库
+  function todoinput() {
+    var rows = $dg1.datagrid('getChecked');
+    if (rows.length > 0) {
+      var id = rows.map(item => item.ID);
+      const url = `/RECEIPTs/PostInputStock`;
+      $.post(url, { id: id }).done(res => {
+        if (res.success) {
+          reload();
+        } else {
+          $.messager.alert('提示', res.err, 'error');
+        }
+      })
+    } else {
+      $.messager.alert('提示', '请选择需要入库的记录', 'info');
+    }
+  }
+  //扫描入库
+  function scaninput() {
+    var validate = $('#inputform').form('enableValidation').form('validate');
+    if (validate) {
+      var barcode = $('#barcode').textbox('getValue');
+      var qty = $('#confirmqty').numberbox('getValue');
+      if (checkbarcode(barcode)) {
+        postscaninput(barcode, qty);
+      }
+
+    } else {
+      $('#barcode').textbox('textbox').focus();
+      $.messager.alert('提示', '输入内容无效', 'info');
+    }
+
+  }
+  //合格
+  function change105() {
+    const url = '/RECEIPTs/ChangeSate';
+    var rows = $dg2.datagrid('getChecked');
+    var id = rows.map(item => { return item.ID; });
+    if (id.length > 0) {
+      console.log(id);
+      $.post(url, { id: id, state: '105' }).done(res => {
+        if (res.success) {
+          reload();
+        } else {
+          $.messager.alert('提示', res.err, 'error');
+        }
+      });
+    } else {
+      $.messager.alert('提示','选择先勾选记录','info')
+    }
+
+  }
+  function change104() {
+    const url = '/RECEIPTs/ChangeSate';
+    var rows = $dg2.datagrid('getChecked');
+    var id = rows.map(item => { return item.ID });
+    if (id.length > 0) {
+      $.post(url, { id: id, state: '104' }).done(res => {
+        if (res.success) {
+          reload();
+        } else {
+          $.messager.alert('提示', res.err, 'error');
+        }
+      });
+    } else {
+      $.messager.alert('提示', '选择先勾选记录', 'info')
+    }
+
+  }
+ //call service;
+  function postscaninput(barcode,qty) {
+    var url = `/RECEIPTs/ScanInput?barcode=${barcode}&qty=${qty}`;
+    $.get(url).done(res => {
+      if (res.success) {
+
+        reload();
+        toastr.success(`[${barcode}]入库成功!`);
+      } else {
+        $.messager.alert('提示', res.err, 'error');
+      }
+    });
+  }
+  //检查条码是否能匹配到数据
+  function checkbarcode(barcode) {
+    var array = barcode.split('_');
+    if (array.length == 4) {
+      var po = array[0];
+      var dt = [...array[1]];
+      var sku = array[2];
+      var no = array[3];
+      var y = '';
+      var m = '';
+      var d=''
+      if (dt.length == 3) {
+        y = '201' + dt[0];
+        if (dt[1].charCodeAt() > 55) {
+          m = dt[1].charCodeAt() - 55;
+        } else {
+          m = dt[1];
+        }
+        if (dt[2].charCodeAt() > 55) {
+          d = dt[2].charCodeAt() - 55;
+        } else {
+          d = dt[2];
+        }
+        var date = y + '/' + numeral(m).format('00') + '/' + numeral(d).format('00');
+
+        var rows = $dg1.datagrid('getRows');
+        var find = [];
+        var find = rows.filter(item => {
+          return item.POKEY == po && item.SKU == sku && item.RECEIPTDATE.indexOf(date)>=0
+        });
+        console.log(find);
+        if (find.length > 0) {
+          $('#qtyexpected').numberbox('setValue', find[0].QTYEXPECTED);
+          $('#confirmqty').numberbox('setValue', find[0].QTYEXPECTED);
+          return true;
+        } else {
+          //$.messager.alert('提示', '没有找到匹配的记录');
+          toastr.error('没有找到匹配的记录');
+          return false;
+        }
+        
+      } else {
+        //$.messager.alert('提示', '日期格式不符');
+        toastr.error('日期格式不符');
+        return false;
+      }
+      //console.log(po, y, m, d, sku, no);
+    } else {
+      //$.messager.alert('提示','条码长度不符');
+      toastr.error('条码长度不符');
+      return false;
+    }
+    
+  }
+  function todate(str) {
+    var array = [...str];
+    if (array.length == 3) {
+
+    } else {
+      
+    }
+  }
+  //输入条码
+  function inputbarcode(val1, val2) {
+    console.log(val1, val2);
+    if (val1.length>=10  && checkbarcode(val1)) {
+      if ($("#autocheck").is(':checked')) {
+        var qty = $('#confirmqty').numberbox('getValue');
+        postscaninput(val1,qty);
+      }
+     
+    } else {
+      
+      $('#barcode').textbox('setValue', '');
+      setTimeout(function () { $('#barcode').textbox('textbox').focus() }, 100);
+    }
+
+  }
+  //取消入库
+  function undo(value,index) {
+    console.log(value,index);
+    var url = `/RECEIPTs/Undo?id=${value}`;
+    $.get(url).done(res => {
+      if (res.success) {
+        reload();
+        toastr.success(`[${barcode}]取消成功!`);
+      } else {
+        $.messager.alert('提示', res.err, 'error');
+      }
+    });
+  }
+
+  $(() => {
+    $('#barcode').textbox('textbox').bind('keypress', function (e) {
+      console.log(e.keyCode)
+      if (e.keyCode == 13) {
+
+      }
+    });
+      $dg2 = $dg2.datagrid({
+        rownumbers: true,
+        checkOnSelect: true,
+        selectOnCheck: false,
+        idField: 'ID',
+        sortName: 'ID',
+        sortOrder: 'desc',
+        remoteFilter: false,
+        singleSelect: false,
+        pageSize: 100,
+        pagination: false,
+        striped: true,
+        onBeforeLoad: function () {
+          //datagrid resize when jarvisWidgets resized.
+          const that = $(this);
+          $(window).on("resize.jarvisWidgets", () => {
+            that.datagrid('resize');
+          })
+        },
+        rowStyler: function (index, row) {
+          if (row.STATUS == '105') {
+            return 'background-color:#A5D6A7;color:#000;';
+          } else if(row.STATUS == '104') {
+            return 'background-color:#F4511E;color:#fff;';
+          }
+        },
+        frozenColumns: [[
+          /*开启CheckBox选择功能*/
+          { field: 'ck', checkbox: true },
+          {
+            field: 'ID',
+            title: '@Html.L("Command")',
+            width: 50,
+            sortable: false,
+            resizable: true,
+            formatter: function showdetailsformatter(value, row, index) {
+              return `<button class="btn btn-default btn-xs" onclick="undo('${value}',${index})"  title="取消入库"  ><i class="fa fa-undo"></i> </button>`;
+            }
+          }
+        ]],
+        columns: [[ 
+          {    /*外箱标签*/
+            field: 'LOTTABLE3',
+            title: '<span class="required">外箱标签</span>',
+            width: 180,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*状态*/
+            field: 'STATUS',
+            title: '状态',
+            width: 80,
+            hidden: false,
+            sortable: true,
+            formatter: asnstatusformatter,
+            resizable: true
+          },
+          {    /*行号*/
+            field: 'RECEIPTLINENUMBER',
+            title: '<span class="required">行号</span>',
+            width: 50,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*物料编号*/
+            field: 'SKU',
+            title: '<span class="required">物料编号</span>',
+            width: 120,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*物料名称*/
+            field: 'SKUNAME',
+            title: '物料名称',
+            width: 160,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*供应商物料编号*/
+            field: 'ALTSKU',
+            title: '供应商物料编号',
+            width: 130,
+            hidden: true,
+            sortable: true,
+            resizable: true
+          },
+          {    /*预收量*/
+            field: 'QTYEXPECTED',
+            title: '<span class="required">预收量</span>',
+            width: 80,
+            align: 'right',
+            hidden: false,
+            formatter: numberformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*件数*/
+            field: 'CASECNT',
+            title: '<span class="required">件数</span>',
+            width: 60,
+            align: 'right',
+            hidden: false,
+            formatter: numberformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*订单编号*/
+            field: 'POKEY',
+            title: '订单编号',
+            width: 130,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+        {    /*收货单号*/
+          field: 'RECEIPTKEY',
+          title: '<span class="required">收货单号</span>',
+          width: 100,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+
+        {    /*货主*/
+          field: 'STORERKEY',
+          title: '<span class="required">货主</span>',
+          width: 50,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        
+        {    /*批次号*/
+          field: 'EXTERNRECEIPTKEY',
+          title: '批次号',
+          width: 130,
+          hidden: false,
+          sortable: true,
+          resizable: true
+          },
+          
+        
+        {   /*收货单日期*/
+          field: 'RECEIPTDATE',
+          title: '<span class="required">收货单日期</span>',
+          width: 120,
+          align: 'right',
+          hidden: false,
+          formatter: dateformatter,
+          sortable: true,
+          resizable: true
+          },
+          
+        {    /*仓库号*/
+          field: 'WHSEID',
+          title: '<span class="required">仓库号</span>',
+          width: 130,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*工厂名称*/
+          field: 'LOTTABLE1',
+          title: '工厂名称',
+          width: 260,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*公司名称*/
+          field: 'LOTTABLE2',
+          title: '公司名称',
+          width: 260,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*供应商代码*/
+          field: 'SUPPLIERCODE',
+          title: '供应商代码',
+          width: 130,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*供应商名称*/
+          field: 'SUPPLIERNAME',
+          title: '供应商名称',
+          width: 260,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {   /*收货日期*/
+          field: 'DATERECEIVED',
+          title: '收货日期',
+          width: 120,
+          align: 'right',
+          hidden: false,
+          formatter: dateformatter,
+          sortable: true,
+          resizable: true
+        },
+        ]]
+      });
+      $dg1 = $dg1.datagrid({
+        rownumbers: true,
+        checkOnSelect: true,
+        selectOnCheck: false,
+        idField: 'ID',
+        sortName: 'ID',
+        sortOrder: 'desc',
+        remoteFilter: false,
+        singleSelect: false,
+        pageSize: 100,
+        pagination: false,
+        striped: true,
+        onBeforeLoad: function () {
+          //datagrid resize when jarvisWidgets resized.
+          const that = $(this);
+          $(window).on("resize.jarvisWidgets", () => {
+            that.datagrid('resize');
+          })
+        },
+        frozenColumns: [[
+          /*开启CheckBox选择功能*/
+          { field: 'ck', checkbox: true },
+          {
+            field: '_operate1',
+            title: '@Html.L("Command")',
+            width: 50,
+            sortable: false,
+            resizable: true,
+            formatter: function showdetailsformatter(value, row, index) {
+              return '<button class="btn btn-default btn-xs" disabled title="手工确认"  ><i class="fa fa-cart-arrow-down"></i> </button>';
+            }
+          }
+        ]],
+        columns: [[{ /*ID*/
+          field: 'ID',
+          title: '<span class="required">ID</span>',
+          width: 120,
+          sortable: true,
+          resizable: true,
+          hidden: true
+        },
+        {    /*收货单号*/
+          field: 'RECEIPTKEY',
+          title: '<span class="required">收货单号</span>',
+          width: 100,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+
+        {    /*货主*/
+          field: 'STORERKEY',
+          title: '<span class="required">货主</span>',
+          width: 50,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*行号*/
+          field: 'RECEIPTLINENUMBER',
+          title: '<span class="required">行号</span>',
+          width:50,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*物料编号*/
+          field: 'SKU',
+          title: '<span class="required">物料编号</span>',
+          width: 120,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*物料名称*/
+          field: 'SKUNAME',
+          title: '物料名称',
+          width: 160,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*供应商物料编号*/
+          field: 'ALTSKU',
+          title: '供应商物料编号',
+          width: 130,
+          hidden: true,
+          sortable: true,
+          resizable: true
+          },
+          {    /*预收量*/
+            field: 'QTYEXPECTED',
+            title: '<span class="required">预收量</span>',
+            width: 80,
+            align: 'right',
+            hidden: false,
+            formatter: numberformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*件数*/
+            field: 'CASECNT',
+            title: '<span class="required">件数</span>',
+            width: 60,
+            align: 'right',
+            hidden: false,
+            formatter: numberformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*订单编号*/
+            field: 'POKEY',
+            title: '订单编号',
+            width: 130,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+        {    /*批次号*/
+          field: 'EXTERNRECEIPTKEY',
+          title: '批次号',
+          width: 130,
+          hidden: false,
+          sortable: true,
+          resizable: true
+          },
+          
+        
+        {   /*收货单日期*/
+          field: 'RECEIPTDATE',
+          title: '<span class="required">收货单日期</span>',
+          width: 120,
+          align: 'right',
+          hidden: false,
+          formatter: dateformatter,
+          sortable: true,
+          resizable: true
+          },
+          {    /*状态*/
+            field: 'STATUS',
+            title: '状态',
+            width: 130,
+            hidden: false,
+            sortable: true,
+            formatter: asnstatusformatter,
+            resizable: true
+          },
+        {    /*仓库号*/
+          field: 'WHSEID',
+          title: '<span class="required">仓库号</span>',
+          width: 130,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*工厂名称*/
+          field: 'LOTTABLE1',
+          title: '工厂名称',
+          width: 260,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*公司名称*/
+          field: 'LOTTABLE2',
+          title: '公司名称',
+          width: 260,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*供应商代码*/
+          field: 'SUPPLIERCODE',
+          title: '供应商代码',
+          width: 130,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*供应商名称*/
+          field: 'SUPPLIERNAME',
+          title: '供应商名称',
+          width: 260,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {   /*收货日期*/
+          field: 'DATERECEIVED',
+          title: '收货日期',
+          width: 120,
+          align: 'right',
+          hidden: false,
+          formatter: dateformatter,
+          sortable: true,
+          resizable: true
+        },
+        ]]
+      });
+    });
+</script>
+}

@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+// <copyright file="PICKDETAILMetadata.cs" company="neozhu/MVC5-Scaffolder">
+// Copyright (c) 2019 All Rights Reserved
+// </copyright>
+// <author>neo.zhu</author>
+// <date>2019/6/27 8:22:52 </date>
+// <summary>Class representing a Metadata entity </summary>
+  -->
+<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+   </data> 
+  <data name="PICKDETAILKEY" xml:space="preserve">
+    <value>拣货单号</value>
+   </data> 
+  <data name="WHSEID" xml:space="preserve">
+    <value>仓库号</value>
+   </data> 
+  <data name="ORDERKEY" xml:space="preserve">
+    <value>出货单号</value>
+   </data> 
+  <data name="EXTERNRECEIPTKEY" xml:space="preserve">
+    <value>入库批次号</value>
+   </data> 
+  <data name="STORERKEY" xml:space="preserve">
+    <value>货主</value>
+   </data> 
+  <data name="STATUS" xml:space="preserve">
+    <value>状态</value>
+   </data> 
+  <data name="SKU" xml:space="preserve">
+    <value>物料编号</value>
+   </data> 
+  <data name="SKUNAME" xml:space="preserve">
+    <value>物料名称</value>
+   </data> 
+  <data name="QTY" xml:space="preserve">
+    <value>数量</value>
+   </data> 
+  <data name="UMO" xml:space="preserve">
+    <value>单位</value>
+   </data> 
+  <data name="CASECNT" xml:space="preserve">
+    <value>件数</value>
+   </data> 
+  <data name="LOC" xml:space="preserve">
+    <value>库位(良品区/不良品区)</value>
+   </data> 
+  <data name="LOT" xml:space="preserve">
+    <value>批号</value>
+   </data> 
+  <data name="LPN" xml:space="preserve">
+    <value>LPN</value>
+   </data> 
+  <data name="SUPPLIERCODE" xml:space="preserve">
+    <value>供应商代码</value>
+   </data> 
+  <data name="SUPPLIERNAME" xml:space="preserve">
+    <value>供应商名称</value>
+   </data> 
+  <data name="RECEIPTKEY" xml:space="preserve">
+    <value>收货单号</value>
+   </data> 
+  <data name="POKEY" xml:space="preserve">
+    <value>订单编号</value>
+   </data> 
+  <data name="RECEIPTDATE" xml:space="preserve">
+    <value>收货单日期</value>
+   </data> 
+  <data name="PALLET" xml:space="preserve">
+    <value>栈板数</value>
+   </data> 
+  <data name="PACKKEY" xml:space="preserve">
+    <value>包装</value>
+   </data> 
+  <data name="GROSSWGT" xml:space="preserve">
+    <value>毛重(KG)</value>
+   </data> 
+  <data name="NETWGT" xml:space="preserve">
+    <value>净重(KG)</value>
+   </data> 
+  <data name="CUBE" xml:space="preserve">
+    <value>体积(M)</value>
+   </data> 
+  <data name="LOTTABLE1" xml:space="preserve">
+    <value>工厂名称</value>
+   </data> 
+  <data name="LOTTABLE2" xml:space="preserve">
+    <value>公司名称</value>
+   </data> 
+  <data name="LOTTABLE3" xml:space="preserve">
+    <value>入库外箱标签</value>
+   </data> 
+  <data name="LOTTABLE4" xml:space="preserve">
+    <value>发货单号</value>
+   </data> 
+  <data name="LOTTABLE5" xml:space="preserve">
+    <value>出库外箱标签</value>
+   </data> 
+  <data name="LOTTABLE6" xml:space="preserve">
+    <value>LOTTABLE6</value>
+   </data> 
+  <data name="LOTTABLE7" xml:space="preserve">
+    <value>LOTTABLE7</value>
+   </data> 
+  <data name="LOTTABLE8" xml:space="preserve">
+    <value>LOTTABLE7</value>
+   </data> 
+  <data name="ORDERID" xml:space="preserve">
+    <value>出货单ID</value>
+   </data> 
+</root>

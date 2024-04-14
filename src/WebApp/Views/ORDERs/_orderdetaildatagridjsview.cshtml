@@ -1,0 +1,952 @@
+﻿@model WebApp.Models.ORDERDETAIL
+
+<script type="text/javascript">
+    //是否开启行内编辑
+    var SUBEDITINLINE = false;
+   //初始化 ORDERDETAIL datagrid
+   var $orderdetailsdg = $('#orderdetails_datagrid');
+   //当前行记录
+   var orderdetail = {};
+   //datagrid CRUD method
+    var orderdetails_editIndex = undefined;
+    //取消
+    function orderdetails_reject() {
+		$orderdetailsdg.datagrid('rejectChanges');
+		orderdetails_editIndex = undefined;
+    }
+    //重新加载数据
+    function orderdetails_reload() {
+			if (orderdetails_endEditing()) {
+				$orderdetailsdg.datagrid('reload');
+			}
+	}
+    //关闭编辑状态
+	function orderdetails_endEditing() {
+			if (orderdetails_editIndex === undefined) {
+                return true;
+            }
+			if ($orderdetailsdg.datagrid('validateRow', orderdetails_editIndex)) {
+				$orderdetailsdg.datagrid('endEdit', orderdetails_editIndex);
+				orderdetails_editIndex = undefined;
+                return true;
+			} else {
+				const invalidinput = $('input.validatebox-invalid');
+                const fieldnames = invalidinput.map((index, item) => {
+                  return $(item).attr('placeholder') || $(item).attr('id');
+                });
+                $.messager.alert('提示', `${Array.from(fieldnames)} 输入有误.`, 'error');
+				return false;
+			}
+		}
+    //单击列开启编辑功能
+	function orderdetails_onClickCell(index, field) {
+			const _operates = ['_operate1', 'ck'];
+			if (!SUBEDITINLINE || $.inArray(field, _operates) >= 0) {
+				return false;
+			}
+			if (orderdetails_editIndex !== index) {
+				if (orderdetails_endEditing()) {
+					$orderdetailsdg.datagrid('selectRow', index)
+							.datagrid('beginEdit', index);
+                    orderdetails_editIndex = index;
+					var ed = $orderdetailsdg.datagrid('getEditor', { index: index, field: field });
+					if (ed) {
+						($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
+					}
+				} else {
+					$orderdetailsdg.datagrid('selectRow', orderdetails_editIndex);
+				}
+			}
+		}
+    //双击弹出编辑当前行对话框
+    function orderdetails_onDblClickRow(index, row) {
+        if (!SUBEDITINLINE) {
+            open_orderdetaildlg(index, row, 'Modified');
+        }
+    }
+    //订阅对话框新增返回事件
+    $(document).on('orderdetail_form.add', (e, index,item) => {
+        $orderdetailsdg.datagrid("insertRow",
+            {
+                index: 0,
+                row: item
+            });
+    });
+    //订阅对话框修改返回事件
+    $(document).on('orderdetail_form.edit', (e,index, item) => {
+        $orderdetailsdg.datagrid('updateRow', {
+            index: index,
+            row: item
+        });
+    });
+    //新增记录
+  function orderdetails_append() {
+    var $editform = $('#order_form');
+
+    const item = {
+      ORDERKEY: $('#ORDERKEY', $editform).textbox('getValue'),
+      WHSEID: $('#WHSEID', $editform).textbox('getValue'),
+      STORERKEY: $('#STORERKEY', $editform).textbox('getValue'),
+      EXTERNORDERKEY: $('#EXTERNORDERKEY', $editform).textbox('getValue'),
+      SUPPLIERCODE: $('#SUPPLIERCODE', $editform).textbox('getValue'),
+      SUPPLIERNAME: $('#SUPPLIERNAME', $editform).textbox('getValue'),
+      LOTTABLE2: $('#SUSR2', $editform).textbox('getValue'),
+      ORDERLINENUMBER: '001',
+      STATUS: '100',
+      ORIGINALQTY: 0,
+      UMO: 'EA',
+      CASECNT: 0,
+      OPENQTY: 0,
+      SHIPPEDQTY: 0,
+      QTYPICKED: 0,
+      PALLET: 0,
+      PACKKEY: '-',
+      GROSSWGT: 0,
+      NETWGT: 0,
+      CUBE: 0,
+      PQCQTYINSPECTED: 0,
+      PQCQTYREJECTED: 0,
+      PQCDATE: null,
+      LOTTABLE3: '-',
+      LOTTABLE1: $.getUserName(),
+      REQUESTEDSHIPDATE: $('#REQUESTEDSHIPDATE', $editform).textbox('getValue'),
+      DELIVERYDATE: $('#DELIVERYDATE', $editform).textbox('getValue'),
+
+      ORDERID: orderid
+    };
+    
+    if (!SUBEDITINLINE) {
+      open_orderdetaildlg(0, item, 'Added');
+    } else {
+      if (orderdetails_endEditing()) {
+        //对必填字段进行默认值初始化
+        $orderdetailsdg.datagrid('insertRow',
+          {
+            index: 0,
+            row: item
+          });
+        orderdetails_editIndex = 0;
+        $orderdetailsdg.datagrid('selectRow', orderdetails_editIndex)
+          .datagrid('beginEdit', orderdetails_editIndex);
+      }
+    }
+  }
+    //删除编辑的行
+	function orderdetails_removeit() {
+		if (orderdetails_editIndex !== undefined) {
+			$orderdetailsdg.datagrid('cancelEdit', orderdetails_editIndex)
+					           .datagrid('deleteRow', orderdetails_editIndex);
+			orderdetails_editIndex = undefined;
+        } else {
+           const row = $orderdetailsdg.datagrid('getSelected');
+           if(row){
+             const rowindex = $orderdetailsdg.datagrid('getRowIndex', row);
+             $orderdetailsdg.datagrid('deleteRow', rowindex);
+           }else{
+             $.messager.alert('提示', '没有选中删除的记录.', 'info');
+           }
+        }
+	}
+    //删除选中的行
+    function orderdetails_deletechecked() {
+            const rows = $orderdetailsdg.datagrid('getChecked');
+            if (rows.length > 0) {
+                var id = rows.filter(item=>item.ID!=null).map(item => {
+                    return item.ID;
+                });
+                $.messager.confirm('确认', `你确定要删除这 <span class='badge bg-color-red'>${id.length}</span> 行记录?`,result => {
+                    if (result) {
+                        $.post('/ORDERDETAILS/DeleteCheckedAsync', { id: id })
+                         .done(response => {
+                            if (response.success) {
+                                $orderdetailsdg.datagrid('reload');
+                            } else {
+                                $.messager.alert('错误', response.err,'error');
+                            }
+                         });
+                    }
+                });
+            } else {
+                $.messager.alert('提示', '请先选择要删除的记录!','question');
+            }
+      }
+    //提交保存后台数据库
+	function orderdetails_accept() {
+      return new Promise((resolve, reject) => {
+			if (orderdetails_endEditing()) {
+				if ($orderdetailsdg.datagrid('getChanges').length > 0) {
+					const inserted = $orderdetailsdg.datagrid('getChanges', 'inserted').map(item => {
+                       item.TrackingState = 1;
+                       return item;
+                    });
+					const deleted = $orderdetailsdg.datagrid('getChanges', 'deleted').map(item => {
+                       item.TrackingState = 3;
+                       return item;
+                    });
+					const updated = $orderdetailsdg.datagrid('getChanges', 'updated').map(item => {
+                       item.TrackingState = 2;
+                       return item;
+                    });
+					//过滤已删除的重复项
+                    const changed = inserted.concat(updated.filter(item => {
+                           return !deleted.includes(item);
+                         })).concat(deleted);
+                   //console.table(changed);
+				  if (MODELSTATE === 'Added') {
+                    resolve({ success:true, changed });
+                  } else {
+                    $.post('/ORDERDETAILS/SaveDataAsync', {orderdetails:changed})
+                     .done(response => {
+                        response.changed = changed;
+                        resolve(response);
+						//console.log(response);
+						if (response.success) {
+							toastr.success('保存成功');
+							$orderdetailsdg.datagrid('acceptChanges');
+							$orderdetailsdg.datagrid('reload');
+						} else {
+                           $.messager.alert('错误', response.err ,'error');
+                        }
+					  })
+                      .fail((jqXHR, textStatus, errorThrown) => {
+						//console.log(errorThrown);
+                        resolve({ success: false, err: errorThrown });
+						$.messager.alert('异常', errorThrown,'error');
+					  });
+                   }
+				} else {
+                  resolve({ success: true });
+                }
+			} else {
+               resolve({ success: false });
+            }
+		});
+      }
+
+
+  $(() => {
+    $orderdetailsdg.datagrid({
+      rownumbers: true,
+      iconCls: 'fa fa-list',
+      idField: 'ID',
+      sortName: 'ID',
+      sortOrder: 'asc',
+      remoteFilter: true,
+      singleSelect: true,
+      checkOnSelect: false,
+      selectOnCheck: false,
+      method: 'get',
+      onDblClickRow: orderdetails_onDblClickRow,
+      onClickCell: orderdetails_onClickCell,
+      onSelect: function (index, row) {
+        orderdetail = row;
+      },
+      onEndEdit: function (index, row) {
+
+      },
+      onBeforeEdit: function (index, row) {
+        row.editing = true;
+        $(this).datagrid('refreshRow', index);
+      },
+      onAfterEdit: function (index, row) {
+        row.editing = false;
+        $(this).datagrid('refreshRow', index);
+      },
+      onCancelEdit: function (index, row) {
+        row.editing = false;
+        $(this).datagrid('refreshRow', index);
+      },
+      pagination: true,
+      striped: true,
+      columns: [[
+        { field: 'ID', title: '<span class="required">@Html.DisplayNameFor(model => model.ID)</span>', width: 100, sortable: true, resizable: true, hidden: true },
+        {
+          field: 'ORDERKEY',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.ORDERKEY)</span>',
+          width: 140,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.ORDERKEY)', required: true, validType: 'length[0,20]' }
+          },
+          hidden: true,
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'WHSEID',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.WHSEID)</span>',
+          width: 140,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.WHSEID)', required: true, validType: 'length[0,20]' }
+          },
+          hidden: true,
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'STORERKEY',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.STORERKEY)</span>',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.STORERKEY)', required: true, validType: 'length[0,50]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        {
+          field: 'EXTERNORDERKEY',
+          title: '@Html.DisplayNameFor(model => model.EXTERNORDERKEY)',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.EXTERNORDERKEY)', required: false, validType: 'length[0,50]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        {
+          field: 'ORDERLINENUMBER',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.ORDERLINENUMBER)</span>',
+          width: 80,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.ORDERLINENUMBER)', required: true, validType: 'length[0,6]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+         {
+          field: 'SKU',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.SKU)</span>',
+          width: 120,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.SKU)', required: true, validType: 'length[0,30]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'SKUNAME',
+          title: '@Html.DisplayNameFor(model => model.SKUNAME)',
+          width: 160,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.SKUNAME)', required: false, validType: 'length[0,80]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'ORIGINALQTY',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.ORIGINALQTY)</span>',
+          width: 80,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.ORIGINALQTY)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'QTYPICKED',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.QTYPICKED)</span>',
+          width: 80,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.QTYPICKED)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'OPENQTY',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.OPENQTY)</span>',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.OPENQTY)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'UMO',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.UMO)</span>',
+          width: 80,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.UMO)', required: true, validType: 'length[0,10]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'CASECNT',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.CASECNT)</span>',
+          width: 80,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.CASECNT)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'STATUS',
+          title: '@Html.DisplayNameFor(model => model.STATUS)',
+          width: 80,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.STATUS)', required: false, validType: 'length[0,3]' }
+          },
+          sortable: true,
+          formatter: sostatusformatter,
+          resizable: true
+        },
+        
+        {
+          field: 'SHIPPEDQTY',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.SHIPPEDQTY)</span>',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.SHIPPEDQTY)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          hidden:true,
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        
+        {
+          field: 'PALLET',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.PALLET)</span>',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.PALLET)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          hidden: true,
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'PACKKEY',
+          title: '@Html.DisplayNameFor(model => model.PACKKEY)',
+          width: 140,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.PACKKEY)', required: false, validType: 'length[0,10]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'GROSSWGT',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.GROSSWGT)</span>',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.GROSSWGT)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'NETWGT',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.NETWGT)</span>',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.NETWGT)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'CUBE',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.CUBE)</span>',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.CUBE)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'NOTES',
+          title: '@Html.DisplayNameFor(model => model.NOTES)',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.NOTES)', required: false, validType: 'length[0,100]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'LOTTABLE2',
+          title: '@Html.DisplayNameFor(model => model.LOTTABLE2)',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.LOTTABLE2)', required: false, validType: 'length[0,50]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'SUPPLIERCODE',
+          title: '@Html.DisplayNameFor(model => model.SUPPLIERCODE)',
+          width: 140,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.SUPPLIERCODE)', required: false, validType: 'length[0,20]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'SUPPLIERNAME',
+          title: '@Html.DisplayNameFor(model => model.SUPPLIERNAME)',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.SUPPLIERNAME)', required: false, validType: 'length[0,80]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+       
+        {
+          field: 'ALTSKU',
+          title: '@Html.DisplayNameFor(model => model.ALTSKU)',
+          width: 140,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.ALTSKU)', required: false, validType: 'length[0,30]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        
+        
+        {
+          field: 'PQCQTYINSPECTED',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.PQCQTYINSPECTED)</span>',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.PQCQTYINSPECTED)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'PQCQTYREJECTED',
+          title: '<span class="required">@Html.DisplayNameFor(model => model.PQCQTYREJECTED)</span>',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.PQCQTYREJECTED)',
+              required: true,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'PQCSTATUS',
+          title: '@Html.DisplayNameFor(model => model.PQCSTATUS)',
+          width: 140,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.PQCSTATUS)', required: false, validType: 'length[0,10]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        {
+          field: 'PQCWHO',
+          title: '@Html.DisplayNameFor(model => model.PQCWHO)',
+          width: 140,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.PQCWHO)', required: false, validType: 'length[0,10]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        {
+          field: 'PQCDATE',
+          title: '@Html.DisplayNameFor(model => model.PQCDATE)',
+          width: 120,
+          align: 'right',
+          editor: {
+            type: 'datebox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.PQCDATE)', required: false }
+          },
+          sortable: true,
+          resizable: true,
+          hidden: true,
+          formatter: dateformatter
+        },
+        {
+          field: 'LOTTABLE3',
+          title: '@Html.DisplayNameFor(model => model.LOTTABLE3)',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.LOTTABLE3)', required: false, validType: 'length[0,50]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        {
+          field: 'LOTTABLE1',
+          title: '@Html.DisplayNameFor(model => model.LOTTABLE1)',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.LOTTABLE1)', required: false, validType: 'length[0,50]' }
+          },
+          sortable: true,
+          resizable: true
+        },
+        {
+          field: 'REQUESTEDSHIPDATE',
+          title: '@Html.DisplayNameFor(model => model.REQUESTEDSHIPDATE)',
+          width: 120,
+          align: 'right',
+          editor: {
+            type: 'datebox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.REQUESTEDSHIPDATE)', required: false }
+          },
+          sortable: true,
+          resizable: true,
+          hidden: true,
+          formatter: dateformatter
+        },
+        {
+          field: 'DELIVERYDATE',
+          title: '@Html.DisplayNameFor(model => model.DELIVERYDATE)',
+          width: 120,
+          align: 'right',
+          editor: {
+            type: 'datebox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.DELIVERYDATE)', required: false }
+          },
+          sortable: true,
+          resizable: true,
+          hidden: true,
+          formatter: dateformatter
+        },
+        {
+          field: 'EXTERNLINENO',
+          title: '@Html.DisplayNameFor(model => model.EXTERNLINENO)',
+          width: 140,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.EXTERNLINENO)', required: false, validType: 'length[0,20]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        {
+          field: 'LOTTABLE4',
+          title: '@Html.DisplayNameFor(model => model.LOTTABLE4)',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.LOTTABLE4)', required: false, validType: 'length[0,50]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        {
+          field: 'LOTTABLE5',
+          title: '@Html.DisplayNameFor(model => model.LOTTABLE5)',
+          width: 260,
+          editor: {
+            type: 'textbox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.LOTTABLE5)', required: false, validType: 'length[0,50]' }
+          },
+          sortable: true,
+          hidden: true,
+          resizable: true
+        },
+        {
+          field: 'LOTTABLE6',
+          title: '@Html.DisplayNameFor(model => model.LOTTABLE6)',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.LOTTABLE6)',
+              required: false,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          hidden: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'LOTTABLE7',
+          title: '@Html.DisplayNameFor(model => model.LOTTABLE7)',
+          width: 100,
+          align: 'right',
+          editor: {
+            type: 'numberbox',
+            options: {
+              prompt: '@Html.DisplayNameFor(model => model.LOTTABLE7)',
+              required: false,
+              precision: 2,
+              validType: 'decimal'
+            }
+          },
+          sortable: true,
+          resizable: true,
+          hidden: true,
+          formatter: numberformatter
+        },
+        {
+          field: 'LOTTABLE8',
+          title: '@Html.DisplayNameFor(model => model.LOTTABLE8)',
+          width: 120,
+          align: 'right',
+          editor: {
+            type: 'datebox',
+            options: { prompt: '@Html.DisplayNameFor(model => model.LOTTABLE8)', required: false }
+          },
+          sortable: true,
+          resizable: true,
+          hidden: true,
+          formatter: dateformatter
+        },
+      ]]
+    });
+    //初始化 datagrid filter
+    $orderdetailsdg.datagrid('enableFilter', [
+      {
+        field: 'ORIGINALQTY',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'STATUS',
+        type:'sostatusfilter'
+      },
+      {
+        field: 'CASECNT',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'OPENQTY',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'SHIPPEDQTY',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'QTYPICKED',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'PALLET',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'GROSSWGT',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'NETWGT',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'CUBE',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'PQCQTYINSPECTED',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'PQCQTYREJECTED',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'LOTTABLE6',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'LOTTABLE7',
+        type: 'numberbox',
+        op: ['equal', 'notequal', 'less', 'lessorequal', 'greater', 'greaterorequal']
+      },
+      {
+        field: 'PQCDATE',
+        type: 'dateRange',
+        options: {
+          onChange: function (value) {
+            $orderdetailsdg.datagrid('addFilterRule', {
+              field: 'PQCDATE',
+              op: 'between',
+              value: value
+            });
+            $orderdetailsdg.datagrid('doFilter');
+          }
+        }
+      },
+      {
+        field: 'REQUESTEDSHIPDATE',
+        type: 'dateRange',
+        options: {
+          onChange: function (value) {
+            $orderdetailsdg.datagrid('addFilterRule', {
+              field: 'REQUESTEDSHIPDATE',
+              op: 'between',
+              value: value
+            });
+            $orderdetailsdg.datagrid('doFilter');
+          }
+        }
+      },
+      {
+        field: 'DELIVERYDATE',
+        type: 'dateRange',
+        options: {
+          onChange: function (value) {
+            $orderdetailsdg.datagrid('addFilterRule', {
+              field: 'DELIVERYDATE',
+              op: 'between',
+              value: value
+            });
+            $orderdetailsdg.datagrid('doFilter');
+          }
+        }
+      },
+      {
+        field: 'LOTTABLE8',
+        type: 'dateRange',
+        options: {
+          onChange: function (value) {
+            $orderdetailsdg.datagrid('addFilterRule', {
+              field: 'LOTTABLE8',
+              op: 'between',
+              value: value
+            });
+            $orderdetailsdg.datagrid('doFilter');
+          }
+        }
+      },
+    ]);
+  });
+
+</script>
+
+

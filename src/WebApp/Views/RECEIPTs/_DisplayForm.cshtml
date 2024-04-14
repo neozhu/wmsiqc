@@ -1,0 +1,361 @@
+﻿﻿@model WebApp.Models.RECEIPT
+<!-- begin master section -->
+<div class="row">
+    <div class="col col-lg-12 col-md-12">
+<!--begin receipt form  -->
+<form id="receipt_form" class="smart-form" method="post" novalidate >
+@Html.AntiForgeryToken()
+  <input type="hidden" id="@Html.IdFor(model => model.ID)" 
+                       name="@Html.NameFor(model => model.ID)" 
+                       value="@Html.ValueFor(model => model.ID)" />
+ <fieldset>
+     <div class="row">
+			              <!--收货单号-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTKEY)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.RECEIPTKEY)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--仓库号-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.WHSEID)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.WHSEID)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--批次号-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.EXTERNRECEIPTKEY) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.EXTERNRECEIPTKEY)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--订单编号-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.POKEY) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.POKEY)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--公司名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUSR2) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUSR2)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--工厂名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUSR3) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUSR3)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--货主-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.STORERKEY)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.STORERKEY)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--收货单类型(收货/退货)-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.TYPE)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.TYPE)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--状态-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.STATUS)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.STATUS)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--收货单日期-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTDATE)</span> </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.RECEIPTDATE)
+			    </label>
+            </section>
+			  		 
+	    
+			              <!--到货通知日期-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.ADVICEDATE)</span> </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.ADVICEDATE)
+			    </label>
+            </section>
+			  		 
+	    
+			              <!--预计收货日期-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.EXPECTEDRECEIPTDATE) </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.EXPECTEDRECEIPTDATE)
+			    </label>
+            </section>
+			  		 
+	   </div>
+	    
+     <div class="row">
+			              <!--实际到货日期-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.ARRIVALDATETIME) </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.ARRIVALDATETIME)
+			    </label>
+            </section>
+			  		 
+	    
+			              <!--结案日期-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.CLOSEDDATE) </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.CLOSEDDATE)
+			    </label>
+            </section>
+			  		 
+	    
+			              <!--供应商代码-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUPPLIERCODE) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUPPLIERCODE)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--供应商名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUPPLIERNAME) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUPPLIERNAME)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--承运商代码-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.CARRIERKEY) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.CARRIERKEY)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--承运商名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.CARRIERNAME) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.CARRIERNAME)
+            </label>
+            </section>
+ 		 
+	    
+			  			<!--合计数量-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.TOTALQTY)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.TOTALQTY)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--合计未收数量-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.OPENQTY)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.OPENQTY)
+			    </label>
+            </section>
+		 
+	   </div>
+	    
+     <div class="row">
+			  			<!--合计件数-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.TOTALPACKAGE) </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.TOTALPACKAGE)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--合计毛重(KG)-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.TOTALGROSSWEIGHT) </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.TOTALGROSSWEIGHT)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--合计体积(M)-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.TOTALVOLUME) </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.TOTALVOLUME)
+			    </label>
+            </section>
+		 
+	    
+			              <!--备注-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.NOTES) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.NOTES)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--上传用户-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUSR1) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUSR1)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--SUSR4-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUSR4) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUSR4)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--SUSR5-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUSR5) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUSR5)
+            </label>
+            </section>
+ 		 
+	    
+			  			<!--SUSR6-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUSR6) </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.SUSR6)
+			    </label>
+            </section>
+		 
+	   </div>
+	    
+     <div class="row">
+			  			<!--SUSR7-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUSR7) </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.SUSR7)
+			    </label>
+            </section>
+		 
+	    
+			              <!--SUSR8-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUSR8) </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.SUSR8)
+			    </label>
+            </section>
+			  		 
+	    
+   </div>
+	    
+</fieldset>
+</form>
+<!-- end receipt form  -->
+</div>
+</div>
+<!-- end master section -->
+<!--========================================================================================-->
+
+    <div class="row">
+        <section class="col col-md-12 col-lg-12">
+    <!-- details tabs -->
+    <div class="tabs-container">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs bordered">
+								<li class="active"><a data-toggle="tab" href="#tab-receiptdetails"> RECEIPTDETAILS</a></li>
+				   
+		 </ul>
+		 <!-- Tab panes -->
+         <div class="tab-content">
+              <div id="tab-receiptdetails" class="tab-pane active">
+                   <div class="panel-body-toolbar">
+                                    <div class="row">
+                                        <div class="col-sm-8  ">
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_append()" class="btn btn-sm btn-default"> <i class="fa fa-plus"></i> 新增 </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_removeit()" class="btn btn-sm btn-default"> <i class="fa fa-trash-o"></i> 删除 </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_accept()" class="btn btn-sm btn-default"> <i class="fa fa-floppy-o"></i> 保存 </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_reload()" class="btn btn-sm btn-default"> <i class="fa fa-refresh"></i> 刷新 </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:receiptdetails_reject()" class="btn btn-sm btn-default"> <i class="fa fa-window-close-o"></i> 取消 </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                   </div>
+                <div class="table-responsive">
+				<table id="receiptdetails_datagrid" >
+                </table>
+              
+            </div>
+         </div>
+	</div>
+	</div>
+ 
+<!--end details tabs -->
+        </div>
+    </div>
+<!-- end detail section -->
+
+
+

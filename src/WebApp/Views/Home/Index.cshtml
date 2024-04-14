@@ -1,0 +1,806 @@
+﻿<!-- MAIN CONTENT -->
+<div id="content">
+  <div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+      <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-home"></i> Dashboard <span>> My Dashboard</span></h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+
+    </div>
+  </div>
+  <!-- widget grid -->
+  <section id="widget-grid" class="">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-5 col-md-4">
+                <div class="icon-big text-center icon-warning">
+                  <i class="nc-icon nc-box-2 text-success"></i>
+                </div>
+              </div>
+              <div class="col-7 col-md-8">
+                <div class="numbers">
+                  <p class="card-category">未完成收货</p>
+                  <p class="card-title" id="target1">
+                    0
+                  </p><p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer ">
+            <hr>
+            <div class="stats">
+              <i class="fa fa-refresh"></i> 刷新
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-5 col-md-4">
+                <div class="icon-big text-center icon-warning">
+                  <i class="nc-icon nc-delivery-fast text-success"></i>
+                </div>
+              </div>
+              <div class="col-7 col-md-8">
+                <div class="numbers">
+                  <p class="card-category">未完成出货</p>
+                  <p class="card-title" id="target2">
+                    0
+                  </p><p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer ">
+            <hr>
+            <div class="stats">
+              <i class="fa fa-refresh"></i> 刷新
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-5 col-md-4">
+                <div class="icon-big text-center icon-warning">
+                  <i class="nc-icon nc-time-alarm text-danger"></i>
+                </div>
+              </div>
+              <div class="col-7 col-md-8">
+                <div class="numbers">
+                  <p class="card-category">超时发运</p>
+                  <p class="card-title" id="target3">
+                    0
+                  </p><p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer ">
+            <hr>
+            <div class="stats">
+              <i class="fa fa-clock-o"></i> 更新
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-5 col-md-4">
+                <div class="icon-big text-center icon-warning">
+                  <i class="nc-icon nc-alert-circle-i text-primary"></i>
+                </div>
+              </div>
+              <div class="col-7 col-md-8">
+                <div class="numbers">
+                  <p class="card-category">在库不良品</p>
+                  <p class="card-title" id="target4">
+                    0
+                  </p><p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer ">
+            <hr>
+            <div class="stats">
+              <i class="fa fa-refresh"></i> 更新
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <article class="col-sm-12">
+        <div class="jarviswidget" id="wid-id-1" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+          <header>
+            <span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
+            <h2>方太VMI仓 配送订单看板</h2>
+          </header>
+          <div>
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+
+            </div>
+            <!-- end widget edit box -->
+
+            <div class="widget-body no-padding">
+              <div class="widget-body-toolbar">
+                <div class="row">
+                  <form id="query_form"
+                        class="easyui-form form-horizontal">
+                    <div class="form-group  col-md-3">
+                      <label class="col-md-3 control-label">配送日期(起)</label>
+                      <div class="col-md-9">
+                        <input id="REQUESTEDSHIPDATE1"
+                               name="REQUESTEDSHIPDATE1"
+                               value=""
+                               tabindex="5"
+                               class="easyui-datebox"
+                               style="width:100%"
+                               type="text"
+                               data-options="prompt:'配送日期(起)',
+												 " />
+                      </div>
+                    </div>
+                    <div class="form-group  col-md-3">
+                      <label class="col-md-3 control-label">配送日期(至)</label>
+                      <div class="col-md-9">
+                        <input id="REQUESTEDSHIPDATE2"
+                               name="REQUESTEDSHIPDATE2"
+                               value=""
+                               tabindex="5"
+                               class="easyui-datebox"
+                               style="width:100%"
+                               type="text"
+                               data-options="prompt:'配送日期(至)',
+												 " />
+                      </div>
+                    </div>
+                    <div class="form-group  col-md-3">
+                      <label class="col-md-3 control-label">供应商</label>
+                      <div class="col-md-9">
+                        <input id="SUPPLIERCODE"
+                               name="SUPPLIERCODE"
+                               value=""
+                               tabindex="5"
+                               class="easyui-combogrid"
+                               style="width:100%"
+                               type="text"
+                               data-options="prompt:'供应商',
+                               panelHeight: 'auto',
+        url: '/SUPPLIERs/GetComboData',
+        method: 'get',
+        idField: 'SUPPLIERCODE',
+        panelWidth: 350,
+        pagination: true,
+        pageSize:10,
+        textField: 'SUPPLIERNAME',
+        columns: [[
+          { field: 'SUPPLIERCODE', title: '供应商代码', width: 110 },
+          { field: 'SUPPLIERNAME', title: '供应商名称', width: 220 }
+        ]]
+												       " />
+                      </div>
+                    </div>
+                    <div class="form-group  col-md-3">
+                      <label class="col-md-3 control-label">配送厂区</label>
+                      <div class="col-md-9">
+                        <input id="SUSR2"
+                               name="SUSR2"
+                               value=""
+                               tabindex="5"
+                               class="easyui-combobox"
+                               style="width:100%"
+                               type="text"
+                               data-options="prompt:'配送厂区',
+                               data:factoryfiltersource
+												 " />
+                      </div>
+                    </div>
+
+
+
+
+
+                  </form>
+                </div>
+              </div>
+
+              <div class="widget-body-toolbar">
+                <div class="row">
+                  <div class="col-sm-12  ">
+                    <div class="btn-group btn-group-sm">
+                      <button onclick="search()" class="btn btn-default"> <i class="fa fa-refresh"></i> 查询 </button>
+                    </div>
+                    <span class="text-danger" id="toplabel" style="display:inline;width:100%;font-size:15px;text-align:center"> 今日配送总量 ___(笔) 已经配送 ___(笔) 剩余量 __(笔)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <table id="alert_datagrid" style="height:400px"></table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- row -->
+    <div class="row">
+      <article class="col-sm-12">
+        <!-- new widget -->
+        <div class="jarviswidget" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+          <!-- widget options:
+          usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+          data-widget-colorbutton="false"
+          data-widget-editbutton="false"
+          data-widget-togglebutton="false"
+          data-widget-deletebutton="false"
+          data-widget-fullscreenbutton="false"
+          data-widget-custombutton="false"
+          data-widget-collapsed="true"
+          data-widget-sortable="false"
+
+          -->
+          <header>
+            <span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
+            <h2>当天仓库作业</h2>
+
+            <ul class="nav nav-tabs pull-right in" id="myTab">
+              <li class="active">
+                <a data-toggle="tab" href="#s1"><i class="fa fa-clock-o"></i> <span class="hidden-mobile hidden-tablet">任务进度</span></a>
+              </li>
+
+
+            </ul>
+
+          </header>
+
+          <!-- widget div-->
+          <div class="no-padding">
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+
+            </div>
+            <!-- end widget edit box -->
+
+            <div class="widget-body">
+              <!-- content -->
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in padding-10 no-padding-bottom" id="s1">
+                  <div class="row no-space">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                      <span class="demo-liveupdate-1">
+                        <span class="onoffswitch-title">Live switch</span> <span class="onoffswitch">
+                          <input type="checkbox" name="start_interval" class="onoffswitch-checkbox" id="start_interval">
+                          <label class="onoffswitch-label" for="start_interval">
+                            <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
+                            <span class="onoffswitch-switch"></span>
+                          </label>
+                        </span>
+                      </span>
+                      <div id="updating-chart" class="chart-large txt-color-blue"></div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 show-stats">
+
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12">
+                          <span class="text"> 收货任务 <span class="pull-right" id="totalr">0/0</span> </span>
+                          <div class="progress">
+                            <div class="progress-bar bg-color-blueDark" id="totalr1" style="width: 0%;"></div>
+                          </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12">
+                          <span class="text"> QC任务 <span class="pull-right" id="totalqc">0/0 </span> </span>
+                          <div class="progress">
+                            <div class="progress-bar bg-color-blue" style="width: 0%;" id="totalqc1"></div>
+                          </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12">
+                          <span class="text"> 拣货任务 <span class="pull-right" id="totalp">0/0</span> </span>
+                          <div class="progress">
+                            <div class="progress-bar bg-color-greenLight" style="width: 0%;" id="totalp1"></div>
+                          </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12">
+                          <span class="text"> 出货任务 <span class="pull-right" id="totals">0/0</span> </span>
+                          <div class="progress">
+                            <div class="progress-bar bg-color-blue" style="width: 0%;" id="totals1"></div>
+                          </div>
+                        </div>
+
+
+
+
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="show-stat-microcharts">
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+
+                      <div class="easy-pie-chart txt-color-greenLight" id="p0" data-percent="0" data-pie-size="50">
+                        <span class="percent percent-sign">0</span>
+                      </div>
+                      <span class="easy-pie-title"> 收货扫描完成率 <i class="fa fa-caret-up icon-color-bad"></i> </span>
+                      <ul class="smaller-stat hidden-sm pull-right">
+                        <li>
+                          <span class="label bg-color-greenLight"><i class="fa fa-caret-up"></i> 97%</span>
+                        </li>
+                        <li>
+                          <span class="label bg-color-blueLight"><i class="fa fa-caret-down"></i> 44%</span>
+                        </li>
+                      </ul>
+                      <div class="sparkline txt-color-greenLight hidden-sm hidden-md pull-right" data-sparkline-type="line" data-sparkline-height="33px" data-sparkline-width="70px" data-fill-color="transparent">
+                        130, 187, 250, 257, 200, 210, 300, 270, 363, 247, 270, 363, 247
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                      <div class="easy-pie-chart txt-color-greenLight" id="p1" data-percent="0" data-pie-size="50">
+                        <span class="percent percent-sign">0</span>
+                      </div>
+                      <span class="easy-pie-title"> 出货扫描完成率 <i class="fa fa-caret-down icon-color-good"></i></span>
+                      <ul class="smaller-stat hidden-sm pull-right">
+                        <li>
+                          <span class="label bg-color-blueDark"><i class="fa fa-caret-up"></i> 76%</span>
+                        </li>
+                        <li>
+                          <span class="label bg-color-blue"><i class="fa fa-caret-down"></i> 3%</span>
+                        </li>
+                      </ul>
+                      <div class="sparkline txt-color-blue hidden-sm hidden-md pull-right" data-sparkline-type="line" data-sparkline-height="33px" data-sparkline-width="70px" data-fill-color="transparent">
+                        257, 200, 210, 300, 270, 363, 130, 187, 250, 247, 270, 363, 247
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                      <div class="easy-pie-chart txt-color-blue" id="p2" data-percent="0" data-pie-size="50">
+                        <span class="percent percent-sign">0% </span>
+                      </div>
+                      <span class="easy-pie-title"> 拣货完成率 <i class="fa fa-caret-up icon-color-good"></i></span>
+                      <ul class="smaller-stat hidden-sm pull-right">
+                        <li>
+                          <span class="label bg-color-darken">95%</span>
+                        </li>
+                        <li>
+                          <span class="label bg-color-blueDark"><i class="fa fa-caret-up"></i> 95%</span>
+                        </li>
+                      </ul>
+                      <div class="sparkline txt-color-darken hidden-sm hidden-md pull-right" data-sparkline-type="line" data-sparkline-height="33px" data-sparkline-width="70px" data-fill-color="transparent">
+                        200, 210, 363, 247, 300, 270, 130, 187, 250, 257, 363, 247, 270
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                      <div class="easy-pie-chart txt-color-red" id="p3" data-percent="0" data-pie-size="50">
+                        <span class="percent dpercent-sign">0%  </span>
+                      </div>
+                      <span class="easy-pie-title"> QC完成率 <i class="fa fa-caret-down icon-color-good"></i></span>
+                      <ul class="smaller-stat hidden-sm pull-right">
+                        <li>
+                          <span class="label bg-color-red"><i class="fa fa-caret-up"></i> 5% </span>
+                        </li>
+                        <li>
+                          <span class="label bg-color-blue"><i class="fa fa-caret-down"></i> 5%</span>
+                        </li>
+                      </ul>
+                      <div class="sparkline txt-color-red hidden-sm hidden-md pull-right" data-sparkline-type="line" data-sparkline-height="33px" data-sparkline-width="70px" data-fill-color="transparent">
+                        2700, 3631, 2471, 2700, 3631, 2471, 1300, 1877, 2500, 2577, 2000, 2100, 3000
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- end s1 tab pane -->
+
+              </div>
+
+              <!-- end content -->
+            </div>
+
+          </div>
+          <!-- end widget div -->
+        </div>
+        <!-- end widget -->
+
+      </article>
+    </div>
+    <!-- end row -->
+    <!-- row -->
+    <!-- end row -->
+
+  </section>
+  <!-- end widget grid -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section pagespecific {
+  <script src="~/Scripts/smartadmin.charts.min.js"></script>
+
+  <script>
+    var $dg1 = $('#alert_datagrid');
+    //查询
+    function search() {
+      var dt1 = $('#REQUESTEDSHIPDATE1').datebox('getValue');
+      var dt2 = $('#REQUESTEDSHIPDATE2').datebox('getValue');
+      var supplier = $('#SUPPLIERCODE').combogrid('getValue');
+      var susr2 = $('#SUSR2').combobox('getValue');
+      var url = `/ORDERDETAILs/GetKanbanData?dt1=${dt1}&dt2=${dt2}&supplier=${supplier}&susr2=${susr2}`;
+      $dg1.datagrid('loading');
+      $.get(url).done(res => {
+ 
+        $dg1.datagrid('loadData', res);
+        $dg1.datagrid('loaded');
+      });
+
+    }
+
+
+    $(document).ready(function () {
+      $dg1 = $dg1.datagrid({
+        rownumbers: true,
+        checkOnSelect: true,
+        selectOnCheck: false,
+        idField: 'ID',
+        sortName: 'ID',
+        sortOrder: 'desc',
+        remoteFilter: false,
+        singleSelect: false,
+        pageSize: 100,
+        pagination: false,
+        striped: true,
+        rowStyler: function (index, row) {
+          if (row.STATUS=='102' && row.ORIGINALQTY > row.QTYPICKED) {
+            return 'background-color:#FFCC80;color:#000;';
+          } else if (row.STATUS == '106') {
+            return 'background-color:#AED581;color:#000;';
+          }
+        },
+        onBeforeLoad: function () {
+          //datagrid resize when jarvisWidgets resized.
+          const that = $(this);
+          $(window).on("resize.jarvisWidgets", () => {
+            that.datagrid('resize');
+          })
+        },
+        columns: [[
+          
+          {   /*配送日期*/
+            field: 'REQUESTEDSHIPDATE',
+            title: '配送日期',
+            width: 110,
+            align: 'right',
+            hidden: false,
+            formatter: dateformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*供应商名称*/
+            field: 'SUPPLIERNAME',
+            title: '供应商名称',
+            width: 190,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+        {    /*物料名称*/
+          field: 'SKUNAME',
+          title: '物料名称',
+          width: 260,
+          hidden: false,
+          sortable: true,
+          resizable: true
+          },
+          {    /*批次号*/
+            field: 'EXTERNORDERKEY',
+            title: '批号',
+            width: 120,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*配送厂区*/
+            field: 'LOTTABLE2',
+            title: '配送厂区',
+            width: 120,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+         
+          {    /*预收量*/
+            field: 'QTY',
+            title: '需求数量',
+            width: 80,
+            align: 'right',
+            hidden: false,
+            formatter: numberformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*要求到货时间*/
+            field: 'DELIVERYDATE',
+            title: '要求到货时间',
+            width: 140,
+            hidden: false,
+            formatter: datetimeformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*出货信息*/
+            field: '_',
+            title: '<span class="required">剩余作业时间</pan>',
+            width: 140,
+            hidden: false,
+            sortable: true,
+            resizable: true,
+            formatter: function (v, r, i) {
+              if (r.STATUS != '108' && r.STATUS != '107') {
+                var dt1 = new moment(r.DELIVERYDATE);
+                var dt2 = new moment();
+                var duration = moment.duration(dt1.diff(dt2))
+                var hours = parseInt(duration.asHours());
+                var minutes = parseInt(duration.asMinutes()) % 60;
+                console.log(hours, minutes);
+                if (minutes > 0) {
+                  return `<span class="text-success">还有${hours}小时${minutes}分 </span>`
+                } else {
+                  if (hours < 0) {
+                    return `<span class="required">已超时${-hours}小时${-minutes}分 </span>`
+                  } else {
+                    return `<span class="text-warning">已超时${-hours}小时${-minutes}分 </span>`
+                  }
+                }
+              }
+              
+            }
+          },
+          {    /*出货信息*/
+            field: 'ACTUALSHIPDATE',
+            title: '出货信息',
+            width: 140,
+            hidden: false,
+            formatter: datetimeformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*状态*/
+            field: 'STATUS',
+            title: '状态',
+            width: 80,
+            hidden: false,
+            sortable: true,
+            formatter: sostatusformatter,
+            resizable: true
+          },
+          {    /*备注*/
+            field: 'NOTES',
+            title: '备注',
+            width: 120,
+            hidden: false,
+            sortable: true,
+            formatter: sostatusformatter,
+            resizable: true
+          },
+          
+         
+          
+
+          
+          
+           
+        ]]
+    });
+
+      $('#REQUESTEDSHIPDATE1').datebox('setValue', moment().format('YYYY-MM-DD HH:mm:ss'));
+      $('#REQUESTEDSHIPDATE2').datebox('setValue', moment().format('YYYY-MM-DD HH:mm:ss'));
+      search();
+      $.get('/Home/GetTodayData').done(res => {
+        console.log(res);
+       
+        $('#totalr').text(`${res.total1}/${res.total2}`);
+
+        if (res.total2 > 0) {
+          var p1 = (((res.total1) / res.total2) * 100).toFixed(0) + '%';
+          var p2 = ((res.total1 / res.total2) * 100);
+
+          $('#totalr1').width(p1);
+          $('#p0').data('easyPieChart').update(p2);
+        } else {
+          $('#totalr1').width('0%');
+        }
+
+        $('#totalqc').text(`${res.total6}/${res.total7}`);
+        if (res.total7 > 0) {
+          var p2 = ((res.total6 / res.total7) * 100);
+          var p1 = ((res.total6 / res.total7) * 100).toFixed(0) + '%';
+          $('#totalqc1').width(p1);
+          $('#p3').data('easyPieChart').update(p2);
+        } else {
+          $('#totalqc1').width('0%');
+        }
+
+        $('#totalp').text(`${res.total5}/${res.total4}`);
+        if (res.total4 > 0) {
+          var p2 = ((res.total5 / res.total4) * 100);
+          var p1 = ((res.total5 / res.total4) * 100).toFixed(0) + '%';
+          $('#totalp1').width(p1);
+          $('#p2').data('easyPieChart').update(p2);
+        } else {
+          $('#totalp1').width('0%');
+        }
+        $('#totals').text(`${res.total3}/${res.total4}`);
+        if (res.total4 > 0) {
+
+          var p2 = ((res.total3 / res.total4) * 100);
+          var p1 = ((res.total3 / res.total4) * 100).toFixed(0) + '%';
+          $('#totals1').width(p1);
+          $('#p1').data('easyPieChart').update(p2);
+          $('#toplabel').text(`今日配送总量: _${res.total4}_(笔) 已经配送: _${res.total3}_(笔) 剩余量: _${res.total4 - res.total3}_(笔)`);
+        } else {
+          $('#totals1').width('0%');
+          $('#toplabel').text(`今日配送总量: _${0}_(笔) 已经配送: _${0}_(笔) 剩余量: _${0}_(笔)`);
+        }
+      });
+      $.get('/Home/GetTotalData').done(res => {
+
+        console.log(res);
+        const countUp1 = new CountUp('target1', res.total1, { duration: 1 });
+        if (!countUp1.error) {
+          countUp1.start();
+        } else {
+          console.error(countUp1.error);
+        }
+        const countUp2 = new CountUp('target2', res.total2, { duration: 1 });
+        if (!countUp2.error) {
+          countUp2.start();
+        } else {
+          console.error(countUp2.error);
+        }
+        const countUp3 = new CountUp('target3', res.total3, { duration: 1 });
+        if (!countUp3.error) {
+          countUp3.start();
+        } else {
+          console.error(countUp3.error);
+        }
+        const countUp4 = new CountUp('target4', res.total4, { duration: 2 });
+        if (!countUp4.error) {
+          countUp4.start();
+        } else {
+          console.error(countUp4.error);
+        }
+      });
+
+      $(".js-status-update a").click(function () {
+        var selText = $(this).text();
+        var $this = $(this);
+        $this.parents('.btn-group').find('.dropdown-toggle').html(selText + ' <span class="caret"></span>');
+        $this.parents('.dropdown-menu').find('li').removeClass('active');
+        $this.parent().addClass('active');
+      });
+
+
+
+      /*
+      * RUN PAGE GRAPHS
+      */
+
+      /* TAB 1: UPDATING CHART */
+      // For the demo we use generated data, but normally it would be coming from the server
+
+      var data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
+
+      function getRandomData() {
+        if (data.length > 0)
+          data = data.slice(1);
+
+        // do a random walk
+        while (data.length < totalPoints) {
+          var prev = data.length > 0 ? data[data.length - 1] : 50;
+          var y = prev + Math.random() * 10 - 5;
+          if (y < 0)
+            y = 0;
+          if (y > 100)
+            y = 100;
+          data.push(y);
+        }
+
+        // zip the generated y values with the x values
+        var res = [];
+        for (var i = 0; i < data.length; ++i)
+          res.push([i, data[i]])
+        return res;
+      }
+
+      // setup control widget
+      var updateInterval = 1500;
+      $("#updating-chart").val(updateInterval).change(function () {
+
+        var v = $(this).val();
+        if (v && !isNaN(+v)) {
+          updateInterval = +v;
+          $(this).val("" + updateInterval);
+        }
+
+      });
+
+      // setup plot
+      var options = {
+        yaxis: {
+          min: 0,
+          max: 100
+        },
+        xaxis: {
+          min: 0,
+          max: 100
+        },
+        colors: [$UpdatingChartColors],
+        series: {
+          lines: {
+            lineWidth: 1,
+            fill: true,
+            fillColor: {
+              colors: [{
+                opacity: 0.4
+              }, {
+                opacity: 0
+              }]
+            },
+            steps: false
+
+          }
+        }
+      };
+
+      var plot = $.plot($("#updating-chart"), [getRandomData()], options);
+
+      /* live switch */
+      $('input[type="checkbox"]#start_interval').click(function () {
+        if ($(this).prop('checked')) {
+          $on = true;
+          updateInterval = 1500;
+          update();
+        } else {
+          clearInterval(updateInterval);
+          $on = false;
+        }
+      });
+
+      function update() {
+        if ($on == true) {
+          plot.setData([getRandomData()]);
+          plot.draw();
+          setTimeout(update, updateInterval);
+
+        } else {
+          clearInterval(updateInterval)
+        }
+
+      }
+
+      var $on = false;
+
+
+
+    });
+
+  </script>
+}

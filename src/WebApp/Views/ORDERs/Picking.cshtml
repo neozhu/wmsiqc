@@ -1,0 +1,1025 @@
+﻿
+@{
+  ViewBag.Title = "扫描拣货";
+}
+<style>
+  .bs-example {
+    margin-right: 3px;
+    margin-left: 3px;
+    background-color: #fff;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+</style>
+<!-- MAIN CONTENT -->
+<div id="content">
+  <!-- quick navigation bar -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+      <h1 class="page-title txt-color-blueDark">
+        <i class="fa fa-table fa-fw "></i>
+        出货作业
+        <span>
+          >
+          扫描拣货
+        </span>
+      </h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+
+    </div>
+  </div>
+  <!-- end quick navigation bar -->
+  <!-- widget grid -->
+  <section id="widget-grid" class="">
+    <!-- row -->
+    <div class="row">
+      <!-- NEW WIDGET START -->
+      <article class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
+          <!-- widget options:
+          usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+          data-widget-colorbutton="false"
+          data-widget-editbutton="false"
+          data-widget-togglebutton="false"
+          data-widget-deletebutton="false"
+          data-widget-fullscreenbutton="false"
+          data-widget-custombutton="false"
+          data-widget-collapsed="true"
+          data-widget-sortable="false"
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>扫描比对</h2>
+          </header>
+
+          <!-- widget div-->
+          <div>
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+              <!-- This area used as dropdown edit box -->
+            </div>
+            <!-- end widget edit box -->
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+
+              <div class="widget-body-toolbar">
+                <div class="row">
+
+                  <div class="form-inline" style="
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom:5px;
+">
+                    <div class="form-group">
+                      <label for="dt">出货单日期</label>
+                      <input id="dt"
+                             name="dt"
+                             value=""
+                             tabindex="1"
+                             class="easyui-combobox"
+                             type="text"
+                             style="width:200px"
+                             data-options="prompt:'收货单日期',
+                                  width:200,
+     						                  valueField: 'value',
+                                  textField: 'value',
+                                  url: '/ORDERs/GetOrderDateList',
+                                  method:'get',
+                                  onSelect: function(rec){
+                             $('#orderid').combogrid('setValue','');
+                                      var url = '/ORDERs/GetOrderGrid?dt='+rec.value;
+                                     $('#orderid').combogrid('grid').datagrid('reload', url);
+                                  }" />
+                    </div>
+                    <div class="form-group">
+                      <label for="orderid">供应商</label>
+                      <input id="orderid"
+                             name="orderid"
+                             value=""
+                             tabindex="2"
+                             class="easyui-combogrid"
+                             type="text"
+                             style="width:200px"
+                             data-options="prompt:'供应商',
+     						                  panelWidth:650,
+                             width:200,
+            value:'',
+            idField:'ID',
+            textField:'SUPPLIERNAME',
+            url:'',
+            method:'get',
+            columns:[[
+                {field:'EXTERNORDERKEY',title:'批次号',width:100},
+                {field:'SUPPLIERNAME',title:'供应商',width:160},
+                {field:'REQUESTEDSHIPDATE',title:'配送日期',width:100,formatter:dateformatter},
+                {field:'DELIVERYDATE',title:'要求到货时间',width:140,formatter:datetimeformatter},
+                {field:'TYPE',title:'类型',width:100,formatter:sotypeformatter},
+                {field:'SUSR2',title:'配送厂区',width:120},
+                {field:'OPENQTY',title:'合计未收数量',width:80},
+                {field:'TOTALPACKAGE',title:'合计件数',width:80},
+                {field:'NOTES',title:'备注',width:160},
+            ]]" />
+                    </div>
+                    <div class="btn-group btn-group-sm">
+                      <button onclick="search()" class="btn btn-default btn-sm"> <i class="fa fa-search"></i> 查询 </button>
+                      <div onclick="doshipping()" class="btn btn-default btn-sm btn-success"> <i class="fa fa-truck"></i> 出货发运 </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="bs-example">
+                    <form id="inputform" class="form-inline" style="
+    margin-left: 10px;
+    margin-right: 10px;
+">
+                      <fieldset>
+                        <legend>扫描操作区</legend>
+                      </fieldset>
+                      <div class="form-group">
+                        <label for="barcode">供应商条码</label>
+                        <input id="barcode1"
+                               name="barcode1"
+                               value=""
+                               tabindex="20"
+                               class="easyui-textbox"
+                               style="width:270px"
+                               type="text"
+                               data-options="prompt:'供应商条码',
+                               width:250,
+								                 required:true,
+                                 validType:'length[10,50]',
+                               onChange:inputbarcode1
+                                 " />
+                      </div>
+                      <div class="form-group">
+                        <label for="barcode">方太条码</label>
+                        <input id="barcode2"
+                               name="barcode2"
+                               value=""
+                               tabindex="20"
+                               class="easyui-textbox"
+                               style="width:270px"
+                               type="text"
+                               data-options="prompt:'方太条码',
+                               width:250,
+								                 required:true,
+                                 validType:'length[10,50]',
+                               onChange:inputbarcode2
+                                 " />
+                      </div>
+                      <div class="form-group">
+                        <label for="qtyexpected">需求数量</label>
+                        <input id="originalqty"
+                               name="originalqty"
+                               value=""
+                               tabindex="21"
+                               class="easyui-numberbox"
+                               style="width:60px"
+                               type="text"
+                               data-options="prompt:'配送数量',
+								                 required:true,
+                                 width:100,
+                                 readonly:true
+                                 " />
+                      </div>
+                      <div class="form-group" style="display:none">
+                        <label for="qtyexpected">件数</label>
+                        <input id="casecnt"
+                               name="casecnt"
+                               value=""
+                               tabindex="22"
+                               class="easyui-numberbox"
+                               style="width:80px"
+                               type="text"
+                               data-options="prompt:'件数',
+								                 required:true,
+                                 width:100,
+                                 readonly:true
+                                 " />
+                      </div>
+
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="autocheck" checked="checked"> 自动提交
+                        </label>
+                      </div>
+                      <div class="btn-group btn-group-sm">
+                        <div onclick="dopick()" class="btn btn-default btn-sm btn-success"> <i class="fa fa-check"></i> 比对 </div>
+                      </div>
+                    </form>
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="alert alert-warning no-margin">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-info"></i>
+                注意事项:供应商标签格式[供应商] [日期] [物料编码] [序号] 方太标签格式 [批号] [日期] [物料编码] [序号]  例如:P201906250364_96P_110837173A_03
+              </div>
+              <!--begin datagrid-content -->
+              <div class="table-responsive">
+                <table id="datagrid1" style="height:400px"></table>
+              </div>
+              <div class="alert alert-success no-margin">
+                
+                <i class="fa-fw fa fa-info"></i>
+                <b>拣货明细</b>
+              </div>
+              <div class="table-responsive">
+                <table id="datagrid2" style="height:400px"></table>
+              </div>
+              <!--end datagrid-content -->
+            </div>
+            <!-- end widget content -->
+          </div>
+          <!-- end widget div -->
+        </div>
+
+      </article>
+      <article class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false">
+          <!-- widget options:
+          usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+          data-widget-colorbutton="false"
+          data-widget-editbutton="false"
+          data-widget-togglebutton="false"
+          data-widget-deletebutton="false"
+          data-widget-fullscreenbutton="false"
+          data-widget-custombutton="false"
+          data-widget-collapsed="true"
+          data-widget-sortable="false"
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <h2>扫描结果</h2>
+          </header>
+
+          <!-- widget div-->
+          <div>
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+              <!-- This area used as dropdown edit box -->
+            </div>
+            <!-- end widget edit box -->
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+
+
+              <div class="alert alert-warning no-margin fade in">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-info"></i>
+                注意事项:扫描比对结果就
+              </div>
+
+              <div id="log">
+              
+              
+                </div>
+            </div>
+            <!-- end widget content -->
+          </div>
+          <!-- end widget div -->
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+    var $dg1 = $('#datagrid1');
+    var $dg2 = $('#datagrid2');
+    //查询
+    function search() {
+      const id = $('#orderid').combogrid('getValue');
+      const dt = $('#dt').combobox('getValue');
+      if (id == '' || dt == '') {
+        $.messager.alert('提示', '请选择日期和供应商', 'info');
+      } else {
+        $dg1.datagrid('loading');
+        const url1 = `/ORDERDETAILs/GetDataByID?id=${id}`;
+        $.get(url1).done(res => {
+   
+          $dg1.datagrid('loadData', res);
+          $dg1.datagrid('loaded');
+        });
+        const url2 = `/PICKDETAILs/GetDataByID?id=${id}`;
+        $dg2.datagrid('loading');
+        $.get(url2).done(res => {
+          $dg2.datagrid('loadData', res);
+          $dg2.datagrid('loaded');
+        });
+       
+      }
+  }
+  function reload() {
+    const id = $('#orderid').combogrid('getValue');
+    const dt = $('#dt').combobox('getValue');
+    if (id == '' || dt == '') {
+      $.messager.alert('提示', '请选择日期和批号', 'info');
+    } else {
+
+      const url1 = `/ORDERDETAILs/GetDataByID?id=${id}`;
+      $dg1.datagrid('loading');
+      $.get(url1).done(res => {
+ 
+        $dg1.datagrid('loadData', res);
+        $dg1.datagrid('uncheckAll');
+        $dg1.datagrid('unselectAll');
+        $dg1.datagrid('loaded');
+      });
+      const url2 = `/PICKDETAILs/GetDataByID?id=${id}`;
+      $dg2.datagrid('loading');
+      $.get(url2).done(res => {
+        $dg2.datagrid('loadData', res);
+        $dg2.datagrid('loaded');
+      });
+
+
+    }
+  }
+  //确认出货
+  function doshipping() {
+    var rows = $dg1.datagrid('getChecked');
+    if (rows.length > 0) {
+      var data = rows.filter(item => { return (item.STATUS == '102' || item.STATUS == '106'); })
+        .map(item => { return { ORDERID: item.ORDERID, ID: item.ID, QTYSHIPPED: item.QTYPICKED }; });
+      //console.log(data);
+      if (data.length > 0) {
+        const url = `/ORDERs/PostShipping`;
+        $.post(url, { data: data }).done(res => {
+          if (res.success) {
+            reload();
+          } else {
+            $.messager.alert('提示', res.err, 'error');
+          }
+        })
+      } else {
+        $.messager.alert('提示', '只有完成拣货记录才能发运', 'info');
+      }
+    } else {
+      $.messager.alert('提示', '请选择需要发运的记录', 'info');
+    }
+  }
+  //扫描拣货
+  function dopick() {
+    var validate = $('#inputform').form('enableValidation').form('validate');
+    if (validate) {
+      var barcode1 = $('#barcode1').textbox('getValue');
+      var barcode2 = $('#barcode2').textbox('getValue');
+      var qty = $('#confirmqty').numberbox('getValue');
+      if (checkbarcode1(barcode1) && checkbarcode2(barcode2)) {
+        postscanpicking(barcode1, barcode2, qty);
+      }
+
+    } else {
+      setTimeout(function () { $('#barcode1').textbox('textbox').focus() }, 100);
+      $.messager.alert('提示', '输入内容无效', 'info');
+    }
+
+  }
+  
+ //call service;
+  function postscanpicking(barcode1,barcode2, qty) {
+    var id = $('#orderid').combogrid('getValue');
+    var url = `/ORDERs/ScanPicking?orderid=${id}&barcode1=${barcode1}&barcode2=${barcode2}&qty=${qty}`;
+    console.log(url);
+    $.get(url).done(res => {
+      if (res.success) {
+        reload();
+        toastr.success(`[${barcode2}]拣货成功!`);
+        var label = `<div class="alert alert-success no-margin animated fadeIn">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-barcode"></i>
+                [${moment().format('HH:mm')}]方太标签[${barcode2}]:比对成功!
+              </div>`
+        $('#log').append(label);
+      } else {
+        //$.messager.alert('提示', res.err, 'error');
+        toastr.error(`[${barcode2}]比对失败!`);
+        var label = `<div class="alert alert-danger no-margin animated fadeIn">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-barcode"></i>
+                [${moment().format('HH:mm')}]方太标签[${barcode2}]:比对失败!{${res.err}}
+              </div>`
+        $('#log').append(label);
+      }
+
+      $('#barcode1').textbox('setValue', '');
+      $('#barcode2').textbox('setValue', '');
+      setTimeout(function () { $('#barcode1').textbox('textbox').focus() }, 100);
+    });
+  }
+  //检查条码是否能匹配到数据
+  function checkbarcode1(barcode) {
+    var array = barcode.split('——');
+    if (array.length == 4) {
+      var supplier = array[0];
+      var dt = [...array[1]];
+      var sku = array[2];
+      var no = array[3];
+      console.log(...array);
+      var y = '';
+      var m = '';
+      var d=''
+      if (dt.length == 3) {
+        y = '201' + dt[0];
+        if (dt[1].charCodeAt() > 55) {
+          m = dt[1].charCodeAt() - 55;
+        } else {
+          m = dt[1];
+        }
+        if (dt[2].charCodeAt() > 55) {
+          d = dt[2].charCodeAt() - 55;
+        } else {
+          d = dt[2];
+        }
+        var date = y + '/' + numeral(m).format('00') + '/' + numeral(d).format('00');
+       
+        var rows = $dg1.datagrid('getRows');
+        var find = [];
+        var find = rows.filter(item => {
+          return (item.SUPPLIERCODE == supplier && item.SKU == sku ) 
+        });
+      
+        if (find.length > 0) {
+          $('#originalqty').numberbox('setValue', find[0].ORIGINALQTY);
+          $('#casecnt').numberbox('setValue', find[0].CASECNT);
+          return true;
+        } else {
+          //$.messager.alert('提示', '没有找到匹配的记录');
+          toastr.error('没有找到匹配的记录');
+          var label =`<div class="alert alert-danger no-margin animated fadeIn">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-barcode"></i>
+                [${moment().format('HH:mm')}]供应商标签[${barcode}]:比对失败!
+              </div>`
+          $('#log').append(label);
+          return false;
+        }
+        
+      } else {
+        //$.messager.alert('提示', '日期格式不符');
+        toastr.error('日期格式不符');
+        return false;
+      }
+      //console.log(po, y, m, d, sku, no);
+    } else {
+      //$.messager.alert('提示','条码长度不符');
+      toastr.error('条码长度不符');
+      return false;
+    }
+    
+  }
+  //检查条码是否能匹配到数据
+  function checkbarcode2(barcode) {
+    var array = barcode.split('——');
+    if (array.length == 3 || array.length==4) {
+      console.log(...array);
+      var lot = array[0];
+      var dt = [...array[1]];
+      var sku = "";
+      var no = "";
+      if (array.length == 3) {
+        var arr = array[2].split('_');
+        sku = arr[0];
+        no = arr[1];
+      } else {
+        sku = array[2];
+        no = array[3];
+      }
+     
+      
+      var y = '';
+      var m = '';
+      var d = ''
+      var barcode1 = $('#barcode1').textbox('getValue');
+      if (barcode1.length > 0 && barcode1.split('——').length == 4 && sku == barcode1.split('——')[2]) {
+
+
+        if (dt.length == 3) {
+          y = '201' + dt[0];
+          if (dt[1].charCodeAt() > 55) {
+            m = dt[1].charCodeAt() - 55;
+          } else {
+            m = dt[1];
+          }
+          if (dt[2].charCodeAt() > 55) {
+            d = dt[2].charCodeAt() - 55;
+          } else {
+            d = dt[2];
+          }
+          var date = y + '/' + numeral(m).format('00') + '/' + numeral(d).format('00');
+        
+          var rows = $dg1.datagrid('getRows');
+          var find = [];
+          var find = rows.filter(item => {
+            return item.SKU == sku
+          });
+          //console.log(find);
+          if (find.length > 0) {
+            $('#originalqty').numberbox('setValue', find[0].ORIGINALQTY);
+            $('#casecnt').numberbox('setValue', find[0].CASECNT);
+            return true;
+          } else {
+            //$.messager.alert('提示', '没有找到匹配的记录');
+            toastr.error('没有找到匹配的记录');
+            var label = `<div class="alert alert-danger no-margin animated fadeIn">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-barcode"></i>
+                [${moment().format('HH:mm')}]方太标签[${barcode}]:比对失败!
+              </div>`
+            $('#log').append(label);
+            return false;
+          }
+
+        } else {
+          //$.messager.alert('提示', '日期格式不符');
+          toastr.error('日期格式不符');
+          return false;
+        }
+      }
+      else {
+        toastr.error('供应商条码与方太条码不匹配');
+        var label = `<div class="alert alert-danger no-margin animated fadeIn">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-barcode"></i>
+                [${moment().format('HH:mm')}]供应商条码:[${barcode1}]与方太标签:[${barcode}]:不匹配!
+              </div>`
+        $('#log').append(label);
+      }
+      //console.log(po, y, m, d, sku, no);
+    } else {
+      //$.messager.alert('提示','条码长度不符');
+      toastr.error('条码长度不符');
+      return false;
+    }
+
+  }
+
+  function todate(str) {
+    var array = [...str];
+    if (array.length == 3) {
+
+    } else {
+      
+    }
+  }
+  function inputbarcode1(val1, val2) {
+    console.log(val1, val2);
+    if (val1.length >= 10 && checkbarcode1(val1)) {
+     } else {
+      $('#barcode1').textbox('setValue', '');
+      setTimeout(function () { $('#barcode1').textbox('textbox').focus() }, 100);
+    }
+
+  }
+
+  //输入条码格式[供应商_日期_物料编码_序号]
+  function inputbarcode2(val1, val2) {
+    console.log(val1, val2);
+    if (val1.length>=10  && checkbarcode2(val1)) {
+      if ($("#autocheck").is(':checked')) {
+        var qty = $('#originalqty').numberbox('getValue');
+        var barcode1 = $('#barcode1').textbox('getValue');
+        postscanpicking(barcode1,val1, qty);
+        
+
+      }
+     
+    } else {
+      
+      $('#barcode2').textbox('setValue', '');
+      setTimeout(function () { $('#barcode2').textbox('textbox').focus() }, 100);
+    }
+
+  }
+  //修改数量
+  function onqtychange(index, id,value) {
+    var pickqty = parseFloat(value);
+    var input = $(`tr[datagrid-row-index='${index}']`).find("input[name='QTYPICKED']");
+    var qty = $(input[0]).val();
+    if (parseFloat(qty) > pickqty) {
+      $.messager.alert('提示', `本次发运数量不能大于拣货数量[${pickqty}]`, 'info');
+     
+      setTimeout(function () { $(input[0]).val(pickqty); }, 100);
+      return;
+    }
+    $dg1.datagrid('updateRow', {
+      index: index,
+      row: {
+        QTYPICKED: parseFloat(qty),
+        
+      }
+    });
+  }
+  //取消拣货
+  function undopicked(value,index) {
+    console.log(value, index);
+    var orderid = $('#orderid').combogrid('getValue');
+    var row = $dg2.datagrid('getRows')[index];
+    var url = `/ORDERs/UndoPicked?pickid=${value}&orderid=${orderid}`;
+
+    $.get(url).done(res => {
+      if (res.success) {
+        reload();
+        toastr.success(`[${row.SUPPLIERCODE}]-[${row.SKU}]-[${row.QTY}]取消拣货!`);
+        var label = `<div class="alert alert-danger no-margin animated fadeIn">
+                <button class="close" data-dismiss="alert">
+                  ×
+                </button>
+                <i class="fa-fw fa fa-barcode"></i>
+                [${moment().format('HH:mm')}][${row.SUPPLIERCODE}] - [${row.SKU}]-[${row.QTY}]取消拣货!
+              </div>`
+        $('#log').append(label);
+
+      } else {
+        $.messager.alert('提示', res.err, 'error');
+      }
+    });
+  }
+
+  $(() => {
+    $('#barcode1').textbox('textbox').bind('keypress', function (e) {
+      console.log(e.keyCode)
+      if (e.keyCode == 13) {
+
+      }
+    });
+    $('#barcode2').textbox('textbox').bind('keypress', function (e) {
+      console.log(e.keyCode)
+      if (e.keyCode == 13) {
+
+      }
+    });
+      
+      $dg1 = $dg1.datagrid({
+        rownumbers: true,
+        checkOnSelect: true,
+        selectOnCheck: false,
+        idField: 'ID',
+        sortName: 'ID',
+        sortOrder: 'desc',
+        remoteFilter: false,
+        singleSelect: false,
+        pageSize: 100,
+        pagination: false,
+        striped: true,
+        rowStyler: function (index, row) {
+          if (row.STATUS=='102' && row.ORIGINALQTY > row.QTYPICKED) {
+            return 'background-color:#FFCC80;color:#000;';
+          } else if (row.STATUS == '106') {
+            return 'background-color:#AED581;color:#000;';
+          }
+        },
+        onBeforeLoad: function () {
+          //datagrid resize when jarvisWidgets resized.
+          const that = $(this);
+          $(window).on("resize.jarvisWidgets", () => {
+            that.datagrid('resize');
+          })
+        },
+        frozenColumns: [[
+          /*开启CheckBox选择功能*/
+          { field: 'ck', checkbox: true },
+          {
+            field: '_operate1',
+            title: '@Html.L("Command")',
+            width: 50,
+            sortable: false,
+            resizable: true,
+            formatter: function showdetailsformatter(value, row, index) {
+              return '<button class="btn btn-default btn-xs" disabled title="发运"  ><i class="fa fa-truck"></i> </button>';
+            }
+          },
+        ]],
+        columns: [[
+          { /*ID*/
+          field: 'ID',
+          title: '<span class="required">ID</span>',
+          width: 120,
+          sortable: true,
+          resizable: true,
+          hidden: true
+        },
+        
+        {    /*行号*/
+          field: 'ORDERLINENUMBER',
+          title: '<span class="required">行号</span>',
+          width:50,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*物料编号*/
+          field: 'SKU',
+          title: '<span class="required">物料编号</span>',
+          width: 120,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*物料名称*/
+          field: 'SKUNAME',
+          title: '物料名称',
+          width: 160,
+          hidden: false,
+          sortable: true,
+          resizable: true
+          },
+          {    /*状态*/
+            field: 'STATUS',
+            title: '状态',
+            width: 80,
+            hidden: false,
+            sortable: true,
+            formatter: sostatusformatter,
+            resizable: true
+          },
+        {    /*供应商物料编号*/
+          field: 'ALTSKU',
+          title: '供应商物料编号',
+          width: 130,
+          hidden: true,
+          sortable: true,
+          resizable: true
+          },
+          {    /*预收量*/
+            field: 'ORIGINALQTY',
+            title: '<span class="required">需求数量</span>',
+            width: 80,
+            align: 'right',
+            hidden: false,
+            formatter: numberformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*本次收货数量*/
+            field: 'QTYPICKED',
+            title: '<span class="required">本次发运数量</span>',
+            width: 120,
+            align: 'right',
+            hidden: false,
+            formatter: function (v, r, i) {
+              return `<input type="number" name="QTYPICKED" readonly onchange="onqtychange(${i},'${r.ID}','${v}')"  value="${v}" style="width:80px" >`
+            },
+            sortable: true,
+            resizable: true
+          },
+          {    /*件数*/
+            field: 'CASECNT',
+            title: '<span class="required">件数</span>',
+            width: 60,
+            align: 'right',
+            hidden: false,
+            formatter: numberformatter,
+            sortable: true,
+            resizable: true
+          },
+          
+          {    /*供应商代码*/
+            field: 'SUPPLIERCODE',
+            title: '供应商代码',
+            width: 130,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*供应商名称*/
+            field: 'SUPPLIERNAME',
+            title: '供应商名称',
+            width: 260,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*批次号*/
+            field: 'EXTERNORDERKEY',
+            title: '批号',
+            width: 260,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {   /*配送日期*/
+            field: 'REQUESTEDSHIPDATE',
+            title: '<span class="required">配送日期</span>',
+            width: 120,
+            align: 'right',
+            hidden: false,
+            formatter: dateformatter,
+            sortable: true,
+            resizable: true
+          },
+
+          {    /*要求到货时间*/
+            field: 'DELIVERYDATE',
+            title: '<span class="required">要求到货时间</span>',
+            width: 100,
+            hidden: false,
+            formatter: dateformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*配送厂区*/
+            field: 'LOTTABLE2',
+            title: '配送厂区',
+            width: 260,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*外箱标签*/
+            field: 'LOTTABLE3',
+            title: '供应商标签',
+            width: 200,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*外箱标签*/
+            field: 'LOTTABLE5',
+            title: '方太标签',
+            width: 200,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+        ]]
+    });
+
+     $dg2 = $dg2.datagrid({
+        rownumbers: true,
+        checkOnSelect: true,
+        selectOnCheck: false,
+        idField: 'ID',
+        sortName: 'ID',
+        sortOrder: 'desc',
+        remoteFilter: false,
+        singleSelect: false,
+        pageSize: 100,
+        pagination: false,
+        striped: true,
+        onBeforeLoad: function () {
+          //datagrid resize when jarvisWidgets resized.
+          const that = $(this);
+          $(window).on("resize.jarvisWidgets", () => {
+            that.datagrid('resize');
+          })
+        },
+        frozenColumns: [[
+          { field: 'ck', checkbox: true },
+          {
+            field: '_',
+            title: '@Html.L("Command")',
+            width: 50,
+            sortable: false,
+            resizable: true,
+            formatter: function showdetailsformatter(value, row, index) {
+              return `<button class="btn btn-default btn-xs"  title="取消拣货" onclick="undopicked(${row.ID},${index})"  ><i class="fa fa-undo"></i> </button>`;
+            }
+          },
+        ]],
+        columns: [[
+          { /*ID*/
+          field: 'ID',
+          title: '<span class="required">ID</span>',
+          width: 120,
+          sortable: true,
+          resizable: true,
+          hidden: true
+        },
+          {    /*入库批号*/
+            field: 'LOT',
+            title: '入库批号',
+            width: 120,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+        {    /*行号*/
+          field: 'ORDERLINENUMBER',
+          title: '<span class="required">行号</span>',
+          width:50,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*物料编号*/
+          field: 'SKU',
+          title: '<span class="required">物料编号</span>',
+          width: 120,
+          hidden: false,
+          sortable: true,
+          resizable: true
+        },
+        {    /*物料名称*/
+          field: 'SKUNAME',
+          title: '物料名称',
+          width: 160,
+          hidden: false,
+          sortable: true,
+          resizable: true
+          },
+          {    /*状态*/
+            field: 'STATUS',
+            title: '状态',
+            width: 80,
+            hidden: false,
+            sortable: true,
+            formatter: qcstatusformatter,
+            resizable: true
+          },
+        {    /*供应商物料编号*/
+          field: 'ALTSKU',
+          title: '供应商物料编号',
+          width: 130,
+          hidden: true,
+          sortable: true,
+          resizable: true
+          },
+          {    /*拣货数量*/
+            field: 'QTY',
+            title: '<span class="required">拣货数量</span>',
+            width: 80,
+            align: 'right',
+            hidden: false,
+            formatter: numberformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*供应商代码*/
+            field: 'SUPPLIERCODE',
+            title: '供应商代码',
+            width: 130,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*供应商名称*/
+            field: 'SUPPLIERNAME',
+            title: '供应商名称',
+            width: 260,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*订单号*/
+            field: 'POKEY',
+            title: '收货订单号',
+            width: 120,
+            hidden: true,
+            sortable: true,
+            resizable: true
+          },
+          {   /*收货单日期*/
+            field: 'RECEIPTDATE',
+            title: '<span class="required">收货单日期</span>',
+            width: 120,
+            align: 'right',
+            hidden: false,
+            formatter: dateformatter,
+            sortable: true,
+            resizable: true
+          },
+          {    /*外箱标签*/
+            field: 'LOTTABLE3',
+            title: '供应商标签',
+            width: 200,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+          {    /*外箱标签*/
+            field: 'LOTTABLE5',
+            title: '方太标签',
+            width: 200,
+            hidden: false,
+            sortable: true,
+            resizable: true
+          },
+        ]]
+    });
+
+    });
+</script>
+}

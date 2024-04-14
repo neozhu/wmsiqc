@@ -1,0 +1,454 @@
+﻿﻿@model WebApp.Models.RECEIPTDETAIL
+<!-- begin master section -->
+<div class="row">
+    <div class="col col-lg-12 col-md-12">
+<!--begin receiptdetail form  -->
+<form id="receiptdetail_form" class="smart-form" method="post" novalidate >
+@Html.AntiForgeryToken()
+  <input type="hidden" id="@Html.IdFor(model => model.ID)" 
+                       name="@Html.NameFor(model => model.ID)" 
+                       value="@Html.ValueFor(model => model.ID)" />
+ <fieldset>
+     <div class="row">
+			              <!--收货单号-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTKEY)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.RECEIPTKEY)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--批次号-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.EXTERNRECEIPTKEY) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.EXTERNRECEIPTKEY)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--订单编号-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.POKEY) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.POKEY)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--收货单日期-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTDATE)</span> </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.RECEIPTDATE)
+			    </label>
+            </section>
+			  		 
+	   </div>
+	    
+     <div class="row">
+			              <!--仓库号-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.WHSEID)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.WHSEID)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--工厂名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.LOTTABLE1) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.LOTTABLE1)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--公司名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.LOTTABLE2) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.LOTTABLE2)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--货主-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.STORERKEY)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.STORERKEY)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--行号-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTLINENUMBER)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.RECEIPTLINENUMBER)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--物料编号-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.SKU)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SKU)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--物料名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SKUNAME) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SKUNAME)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--供应商物料编号-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.ALTSKU) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.ALTSKU)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--状态-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.STAUS) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.STAUS)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--供应商代码-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUPPLIERCODE) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUPPLIERCODE)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--供应商名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUPPLIERNAME) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUPPLIERNAME)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--收货日期-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.DATERECEIVED) </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.DATERECEIVED)
+			    </label>
+            </section>
+			  		 
+	   </div>
+	    
+     <div class="row">
+			  			<!--预收量-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.QTYEXPECTED)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.QTYEXPECTED)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--件数-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.CASECNT)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.CASECNT)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--栈板数-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.PALLET)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.PALLET)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--调整量-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.QTYADJUSTED)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.QTYADJUSTED)
+			    </label>
+            </section>
+		 
+	   </div>
+	    
+     <div class="row">
+			  			<!--拒收量-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.QTYREJECTED)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.QTYREJECTED)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--已收量-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.QTYRECEIVED)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.QTYRECEIVED)
+			    </label>
+            </section>
+		 
+	    
+			              <!--单位-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.UMO)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.UMO)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--包装-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.PACKKEY) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.PACKKEY)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			  			<!--毛重(KG)-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.GROSSWGT)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.GROSSWGT)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--净重(KG)-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.NETWGT)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.NETWGT)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--体积(M)-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.CUBE)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.CUBE)
+			    </label>
+            </section>
+		 
+	    
+			              <!--备注-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.NOTES) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.NOTES)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--外箱标签-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.LOTTABLE3) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.LOTTABLE3)
+            </label>
+            </section>
+ 		 
+	    
+			  			<!--QC数量-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.PQCQTYINSPECTED)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.PQCQTYINSPECTED)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--QC不良数-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.PQCQTYREJECTED)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.PQCQTYREJECTED)
+			    </label>
+            </section>
+		 
+	    
+			              <!--QC状态-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.PQCSTATUS) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.PQCSTATUS)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--QC人员-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.PQCWHO) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.PQCWHO)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--QC日期-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.PQCDATE) </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.PQCDATE)
+			    </label>
+            </section>
+			  		 
+	    
+			              <!--入库条件-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.CONDITIONCODE) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.CONDITIONCODE)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--目标库位(良品区/不良品区)-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.TOLOC) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.TOLOC)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--目标批号-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.TOLOT) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.TOLOT)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--目标LPN-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.TOLPN) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.TOLPN)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--外部单行号-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.EXTERNLINENO) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.EXTERNLINENO)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--LOTTABLE4-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.LOTTABLE4) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.LOTTABLE4)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			              <!--LOTTABLE5-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.LOTTABLE5) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.LOTTABLE5)
+            </label>
+            </section>
+ 		 
+	    
+			  			<!--LOTTABLE6-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.LOTTABLE6) </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.LOTTABLE6)
+			    </label>
+            </section>
+		 
+	    
+			  			<!--LOTTABLE7-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.LOTTABLE7) </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.LOTTABLE7)
+			    </label>
+            </section>
+		 
+	    
+			              <!--LOTTABLE7-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.LOTTABLE8) </label>
+            <label class="label">
+            
+			@Html.DisplayFor(model => model.LOTTABLE8)
+			    </label>
+            </section>
+			  		 
+	   </div>
+	    
+     <div class="row">
+            <!--收货单ID-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.RECEIPTID)</span> </label>
+            <label class="label">
+			      @Html.DisplayFor(model => model.RECEIPTID)
+			</label>
+            </section>
+			 
+	    
+   </div>
+	    
+</fieldset>
+</form>
+<!-- end receiptdetail form  -->
+</div>
+</div>
+<!-- end master section -->
+<!--========================================================================================-->
+
+

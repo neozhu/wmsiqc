@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+// <copyright file="PICKDETAILMetadata.cs" company="neozhu/MVC5-Scaffolder">
+// Copyright (c) 2019 All Rights Reserved
+// </copyright>
+// <author>neo.zhu</author>
+// <date>2019/6/27 8:22:49 </date>
+// <summary>Class representing a Metadata entity </summary>
+  -->
+<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+　　<data name="ID" xml:space="preserve">
+    <value>I D</value>
+   </data> 
+　　<data name="PICKDETAILKEY" xml:space="preserve">
+    <value>P I C K D E T A I L K E Y</value>
+   </data> 
+　　<data name="WHSEID" xml:space="preserve">
+    <value>W H S E I D</value>
+   </data> 
+　　<data name="ORDERKEY" xml:space="preserve">
+    <value>O R D E R K E Y</value>
+   </data> 
+　　<data name="EXTERNRECEIPTKEY" xml:space="preserve">
+    <value>E X T E R N R E C E I P T K E Y</value>
+   </data> 
+　　<data name="STORERKEY" xml:space="preserve">
+    <value>S T O R E R K E Y</value>
+   </data> 
+　　<data name="STATUS" xml:space="preserve">
+    <value>S T A T U S</value>
+   </data> 
+　　<data name="SKU" xml:space="preserve">
+    <value>S K U</value>
+   </data> 
+　　<data name="SKUNAME" xml:space="preserve">
+    <value>S K U N A M E</value>
+   </data> 
+　　<data name="QTY" xml:space="preserve">
+    <value>Q T Y</value>
+   </data> 
+　　<data name="UMO" xml:space="preserve">
+    <value>U M O</value>
+   </data> 
+　　<data name="CASECNT" xml:space="preserve">
+    <value>C A S E C N T</value>
+   </data> 
+　　<data name="LOC" xml:space="preserve">
+    <value>L O C</value>
+   </data> 
+　　<data name="LOT" xml:space="preserve">
+    <value>L O T</value>
+   </data> 
+　　<data name="LPN" xml:space="preserve">
+    <value>L P N</value>
+   </data> 
+　　<data name="SUPPLIERCODE" xml:space="preserve">
+    <value>S U P P L I E R C O D E</value>
+   </data> 
+　　<data name="SUPPLIERNAME" xml:space="preserve">
+    <value>S U P P L I E R N A M E</value>
+   </data> 
+　　<data name="RECEIPTKEY" xml:space="preserve">
+    <value>R E C E I P T K E Y</value>
+   </data> 
+　　<data name="POKEY" xml:space="preserve">
+    <value>P O K E Y</value>
+   </data> 
+　　<data name="RECEIPTDATE" xml:space="preserve">
+    <value>R E C E I P T D A T E</value>
+   </data> 
+　　<data name="PALLET" xml:space="preserve">
+    <value>P A L L E T</value>
+   </data> 
+　　<data name="PACKKEY" xml:space="preserve">
+    <value>P A C K K E Y</value>
+   </data> 
+　　<data name="GROSSWGT" xml:space="preserve">
+    <value>G R O S S W G T</value>
+   </data> 
+　　<data name="NETWGT" xml:space="preserve">
+    <value>N E T W G T</value>
+   </data> 
+　　<data name="CUBE" xml:space="preserve">
+    <value>C U B E</value>
+   </data> 
+　　<data name="LOTTABLE1" xml:space="preserve">
+    <value>L O T T A B L E1</value>
+   </data> 
+　　<data name="LOTTABLE2" xml:space="preserve">
+    <value>L O T T A B L E2</value>
+   </data> 
+　　<data name="LOTTABLE3" xml:space="preserve">
+    <value>L O T T A B L E3</value>
+   </data> 
+　　<data name="LOTTABLE4" xml:space="preserve">
+    <value>L O T T A B L E4</value>
+   </data> 
+　　<data name="LOTTABLE5" xml:space="preserve">
+    <value>L O T T A B L E5</value>
+   </data> 
+　　<data name="LOTTABLE6" xml:space="preserve">
+    <value>L O T T A B L E6</value>
+   </data> 
+　　<data name="LOTTABLE7" xml:space="preserve">
+    <value>L O T T A B L E7</value>
+   </data> 
+　　<data name="LOTTABLE8" xml:space="preserve">
+    <value>L O T T A B L E8</value>
+   </data> 
+　　<data name="ORDERID" xml:space="preserve">
+    <value>O R D E R I D</value>
+   </data> 
+</root>

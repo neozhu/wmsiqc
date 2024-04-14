@@ -1,0 +1,79 @@
+﻿﻿@model WebApp.Models.STOCKGROUPVIEW
+<!-- begin master section -->
+<div class="row">
+    <div class="col col-lg-12 col-md-12">
+<!--begin stockgroupview form  -->
+<form id="stockgroupview_form" class="smart-form" method="post" novalidate >
+@Html.AntiForgeryToken()
+  <input type="hidden" id="@Html.IdFor(model => model.RID)" 
+                       name="@Html.NameFor(model => model.RID)" 
+                       value="@Html.ValueFor(model => model.RID)" />
+ <fieldset>
+     <div class="row">
+			              <!--供应商代码-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUPPLIERCODE) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUPPLIERCODE)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--供应商名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SUPPLIERNAME) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SUPPLIERNAME)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--物料编号-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.SKU)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SKU)
+            </label>
+            </section>
+ 		 
+	    
+			              <!--物料名称-->
+            <section class="col col-3">
+            <label class="label">@Html.DisplayNameFor(model => model.SKUNAME) </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.SKUNAME)
+            </label>
+            </section>
+ 		 
+	   </div>
+	    
+     <div class="row">
+			  			<!--数量-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.TOTAL)</span> </label>
+            <label class="label">
+            @Html.DisplayFor(model => model.TOTAL)
+			    </label>
+            </section>
+		 
+	    
+			              <!--状态-->
+            <section class="col col-3">
+            <label class="label"><span class="required">@Html.DisplayNameFor(model => model.STATUS)</span> </label>
+            <label class="label">
+			 @Html.DisplayFor(model => model.STATUS)
+            </label>
+            </section>
+ 		 
+	    
+   </div>
+	    
+</fieldset>
+</form>
+<!-- end stockgroupview form  -->
+</div>
+</div>
+<!-- end master section -->
+<!--========================================================================================-->
+
+
